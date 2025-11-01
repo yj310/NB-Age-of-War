@@ -10,7 +10,11 @@
 </head>
 
 <body>
-    <script src="sketch.js"></script> <!-- p5.js 코드 파일 연결 -->
+    <!-- p5.js 코드 파일 연결 (순서 중요: 먼저 공통 함수들, 마지막에 setup/draw) -->
+    <script src="data.js"></script>
+    <script src="interactions.js"></script>
+    <script src="entities.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
