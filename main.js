@@ -2,10 +2,14 @@
 
 function setup() {
     setData();
-    createCanvas(400, 400);
 }
 
 function draw() {
-    background(220);
+    update();
+
+    createCanvas(foundation.width, foundation.height);
+    background(foundation.color);
+    
+    drawGameScreen();
     drawEntity();
 }
