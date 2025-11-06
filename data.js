@@ -1,12 +1,22 @@
-/// --------------[Set Data]--------------
-
+/// 데이터 초기화
 function setData() {
-    /// 데이터 초기화
-    foundation = new Frame('#333333', windowWidth, windowHeight);
-    gameScreen = new Frame('#FFFFFF', 800, 600);
-}
+    foundation = new Frame(
+        windowWidth,
+        windowHeight,
+        '#333333',
+        '#000000');
 
-function update() {
-    foundation = new Frame('#BBBBBB', windowWidth, windowHeight);
-
+    gameScreen = new Frame(
+        800,
+        600,
+        '#FFFFFF',
+        '#000000');
+    // 이미지 로드
+    unit1ImageList = [
+        loadImage('assets/images/unit_1_1.png'),
+        loadImage('assets/images/unit_1_2.png'),
+        loadImage('assets/images/unit_1_3.png'),
+        loadImage('assets/images/unit_1_4.png'),
+        loadImage('assets/images/unit_1_5.png'),
+    ];
 }

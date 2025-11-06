@@ -9,7 +9,8 @@ function draw() {
 
     createCanvas(foundation.width, foundation.height);
     background(foundation.color);
-    
+
     drawGameScreen();
     drawEntity();
+    drawInterface();
 }
