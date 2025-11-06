@@ -1,5 +1,5 @@
 /// 데이터 초기화
-function setData() {
+function initialData() {
     foundation = new Frame(
         windowWidth,
         windowHeight,

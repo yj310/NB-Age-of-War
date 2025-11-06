@@ -1,7 +1,7 @@
 /// --------------[Main]--------------
 
 function setup() {
-    setData();
+    initialData();
 }
 
 function draw() {

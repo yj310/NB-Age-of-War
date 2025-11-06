@@ -1,5 +1,3 @@
-/// --------------[Draw Entity]--------------
-
 function drawGameScreen() {
     rectMode(CORNER);
 
