@@ -12,7 +12,7 @@ function initialData() {
     );
 
     /// 게임 화면 프레임 초기화
-    gameScreen = new Frame(
+    mainFrame = new Frame(
         0, 0, // x, y
         800, 600, // width, height
         '#FFFFFF', '#000000' // color, strockColor

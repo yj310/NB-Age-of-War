@@ -8,7 +8,7 @@ let foundation = null;
 
 /// 게임 화면
 /// type: Frame
-let gameScreen = null;
+let mainFrame = null;
 
 /// 게임 상태
 /// type: GameState

@@ -8,7 +8,7 @@ function drawPlaying(screen) {
 function drawEntity() { }
 
 function drawInterface(screen) {
-    translate(gameScreen.x, gameScreen.y);
+    translate(mainFrame.x, mainFrame.y);
     rectMode(CORNER);
 
     drawTopInterface(screen);

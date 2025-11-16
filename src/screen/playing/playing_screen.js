@@ -14,16 +14,16 @@ class PlayingScreen extends GameScreen {
         // this.unitImages = [];
 
         this.topInterfaceFrame = new Frame(
-            gameScreen.width - gameScreen.width, // x
+            mainFrame.width - mainFrame.width, // x
             0, // y
-            gameScreen.width, 100, // width, height
+            mainFrame.width, 100, // width, height
             '#FFFFFF', '#000000' // color, strockColor
         );
 
         this.bottomInterfaceFrame = new Frame(
-            gameScreen.width - gameScreen.width, // x
-            gameScreen.height - 200, // y
-            gameScreen.width, 200, // width, height
+            mainFrame.width - mainFrame.width, // x
+            mainFrame.height - 200, // y
+            mainFrame.width, 200, // width, height
             '#FFFFFF', '#000000' // color, strockColor
         );
     }
@@ -37,7 +37,7 @@ class PlayingScreen extends GameScreen {
         drawPlaying(screen);
 
         this.unitButtons.forEach(button => {
-            button.render(gameScreen);
+            button.render(mainFrame);
         });
     }
 
@@ -71,8 +71,8 @@ class PlayingScreen extends GameScreen {
 
             this.unitButtons.push(
                 new ImageButton(
-                    gameScreen.x + this.bottomInterfaceFrame.x + margin + ((unitWidth + padding) * i),
-                    gameScreen.y + this.bottomInterfaceFrame.y + margin,
+                    mainFrame.x + this.bottomInterfaceFrame.x + margin + ((unitWidth + padding) * i),
+                    mainFrame.y + this.bottomInterfaceFrame.y + margin,
                     unitWidth,
                     unitHeight,
                     unit1ImageList[i],

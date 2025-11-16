@@ -2,7 +2,7 @@
 function drawMainMenu(screen) {
     drawGameScreen();
 
-    translate(gameScreen.x, gameScreen.y);
+    translate(mainFrame.x, mainFrame.y);
     textAlign(CENTER, CENTER);
 
 
@@ -27,12 +27,12 @@ function drawPressAnyKey() {
     }
 
     fill(`  #000000${transparency.toString(16)}`);
-    text("press any key to start", gameScreen.width / 2, 500);
+    text("press any key to start", mainFrame.width / 2, 500);
 }
 
 function drawTitleText() {
     fill("#000000");
     textSize(48);
-    text("인형 왕국 대작전!", gameScreen.width / 2, 150);
+    text("인형 왕국 대작전!", mainFrame.width / 2, 150);
 
 }

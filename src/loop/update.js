@@ -3,18 +3,18 @@ function update() {
     // 전체 배경 프레임 업데이트
     foundation = new Frame(
         0, 0, // x, y
-        max(windowWidth, gameScreen.width), // width
-        max(windowHeight, gameScreen.height), // height
+        max(windowWidth, mainFrame.width), // width
+        max(windowHeight, mainFrame.height), // height
         foundation.color, // color
         foundation.strockColor // strockColor
     );
 
     /// 게임 화면 프레임 업데이트
-    gameScreen = new Frame(
-        (foundation.width - gameScreen.width) / 2,
-        (foundation.height - gameScreen.height) / 2, // x, y
-        gameScreen.width, gameScreen.height, // width, height
-        gameScreen.color, gameScreen.strockColor // color, strockColor
+    mainFrame = new Frame(
+        (foundation.width - mainFrame.width) / 2,
+        (foundation.height - mainFrame.height) / 2, // x, y
+        mainFrame.width, mainFrame.height, // width, height
+        mainFrame.color, mainFrame.strockColor // color, strockColor
     );
 
     // 틱 업데이트
