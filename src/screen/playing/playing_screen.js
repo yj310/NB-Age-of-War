@@ -1,3 +1,6 @@
+const unitStartX = 10;
+const unitStartY = 200;
+
 class PlayingScreen extends GameScreen {
     constructor() {
         super();
@@ -7,6 +10,9 @@ class PlayingScreen extends GameScreen {
 
         this.hp = 100;
         this.maxHp = 100;
+
+        /// type: UnitType[]
+        this.unitTypes = [];
 
         /// type: Unit[]
         this.units = [];
@@ -84,8 +90,26 @@ class PlayingScreen extends GameScreen {
         });
     }
 
-    addUnit(unit) {
-        if (!(unit instanceof Unit)) return;
+    addUnit(unitType) {
+        if (!(unitType instanceof UnitType)) return;
+
+        /// MP 가 부족하면 유닛을 추가하지 않음
+        if (this.mp < unitType.mpCost) return;
+        this.mp -= unitType.mpCost;
+
+        const unitId = this.lastUnitId + 1;
+        const unit = new Unit(
+            unitId,
+            unitType.image,
+            1,
+            unitStartX,
+            unitStartY,
+            unitType.width,
+            unitType.height,
+            unitType.velocityX,
+            unitType.velocityY
+        );
+        this.lastUnitId = unitId;
         this.units.push(unit);
     }
 
@@ -95,34 +119,74 @@ class PlayingScreen extends GameScreen {
     }
 
     setFirstStage() {
+        this.unitTypes = [
+            new UnitType(
+                unit1ImageList[0], // image
+                10, // mpCost
+                30, // width
+                30, // height
+                0.4, // velocityX
+                0, // velocityY
+            ),
+            new UnitType(
+                unit1ImageList[1], // image
+                15, // mpCost
+                30, // width
+                30, // height
+                0.4, // velocityX
+                0, // velocityY
+            ),
+            new UnitType(
+                unit1ImageList[2], // image
+                20, // mpCost
+                30, // width
+                30, // height
+                0.4, // velocityX
+                0, // velocityY
+            ),
+            new UnitType(
+                unit1ImageList[3], // image
+                30, // mpCost
+                30, // width
+                30, // height
+                0.4, // velocityX
+                0, // velocityY
+            ),
+            new UnitType(
+                unit1ImageList[4], // image
+                50, // mpCost
+                30, // width
+                30, // height
+                0.4, // velocityX
+                0, // velocityY
+            )
+        ];
+
         this.unitButtons = [];
-        this.addUnitButton(0, (id) => new Unit1(id));
-        this.addUnitButton(1, (id) => new Unit2(id));
-        this.addUnitButton(2, (id) => new Unit3(id));
-        this.addUnitButton(3, (id) => new Unit4(id));
-        this.addUnitButton(4, (id) => new Unit5(id));
+        this.addUnitButton(0);
+        this.addUnitButton(1);
+        this.addUnitButton(2);
+        this.addUnitButton(3);
+        this.addUnitButton(4);
     }
 
-    addUnitButton(index, createUnit) {
+    addUnitButton(index) {
         const margin = 15;
         const padding = 10;
         const unitWidth = 80;
         const unitHeight = 80;
 
-        const unitId = this.lastUnitId + 1;
-
         this.unitButtons.push(
-            new ImageButton(
+            new UnitButton(
                 this.bottomInterfaceFrame.x + margin + ((unitWidth + padding) * index),
                 this.bottomInterfaceFrame.y + margin,
                 unitWidth,
                 unitHeight,
                 unit1ImageList[index],
-                () => this.addUnit(createUnit(unitId)),
+                () => this.addUnit(this.unitTypes[index]),
+                this.unitTypes[index].mpCost,
             )
         );
-
-        this.lastUnitId = unitId;
     }
 
 

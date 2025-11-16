@@ -1,12 +1,12 @@
 class Button {
-    constructor(x, y, width, height, color, strockColor, onPressed) {
+    constructor(x, y, width, height, onPressed, color, strockColor) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.onPressed = onPressed;
         this.color = color;
         this.strockColor = strockColor;
-        this.onPressed = onPressed;
     }
 
     contains(mouseX, mouseY) {
@@ -30,7 +30,7 @@ class ImageButton extends Button {
         color = '#FFFFFF',
         strockColor = '#000000'
     ) {
-        super(x, y, width, height, color, strockColor, onPressed);
+        super(x, y, width, height, onPressed, color, strockColor);
         this.image = image;
     }
 
@@ -39,5 +39,33 @@ class ImageButton extends Button {
         if (this.image) {
             image(this.image, this.x, this.y, this.width, this.height);
         }
+    }
+}
+
+class UnitButton extends ImageButton {
+    constructor(
+        x, y,
+        width, height,
+        image,
+        onPressed,
+        mpCost,
+        color = '#FFFFFF',
+        strockColor = '#000000',
+    ) {
+        super(x, y, width, height, image, onPressed, color, strockColor);
+        this.mpCost = mpCost;
+    }
+
+    render() {
+        rect(this.x, this.y, this.width, this.height);
+        if (this.image) {
+            image(this.image, this.x, this.y, this.width, this.height);
+        }
+
+        textAlign(CENTER, TOP);
+        textSize(15);
+        fill('#000000');
+        text(`Cost: ${this.mpCost}`, this.x + this.width / 2, this.y + this.height + 10);
+        noFill();
     }
 }
