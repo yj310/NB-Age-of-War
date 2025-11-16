@@ -1,10 +1,12 @@
 class MainMenuScreen extends GameScreen {
-    render() {
-        drawMainMenu();
+    onEnter() { }
+
+    render(screen) {
+        drawMainMenu(screen);
     }
 
     keyPressed(key) {
-        setGameState(GameState.playing);
+        setGameState(GameState.mainMenu);
     }
 
     mousePressed(mouseX, mouseY) {

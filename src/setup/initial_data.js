@@ -20,10 +20,7 @@ function initialData() {
 
     /// 게임 상태 초기화
     gameState = GameState.mainMenu;
-    currentScreen = new MainMenuScreen();
-
-    /// 지우기
-    currentScreen = new PlayingScreen();
+    setGameState(gameState);
 
     // 이미지 로드
     unit1ImageList = [

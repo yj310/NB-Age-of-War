@@ -15,4 +15,29 @@ class Button {
             mouseY >= this.y &&
             mouseY <= this.y + this.height);
     }
+
+    render() {
+        rect(x, y, unitWidth, unitHeight);
+    }
+}
+
+class ImageButton extends Button {
+    constructor(
+        x, y,
+        width, height,
+        image,
+        onPressed,
+        color = '#FFFFFF',
+        strockColor = '#000000'
+    ) {
+        super(x, y, width, height, color, strockColor, onPressed);
+        this.image = image;
+    }
+
+    render() {
+        rect(this.x, this.y, this.width, this.height);
+        if (this.image) {
+            image(this.image, this.x, this.y, this.width, this.height);
+        }
+    }
 }

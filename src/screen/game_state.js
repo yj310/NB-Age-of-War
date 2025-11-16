@@ -19,4 +19,8 @@ function setGameState(state) {
             currentScreen = new PlayingScreen();
             break;
     }
+
+    if (currentScreen instanceof GameScreen) {
+        currentScreen.onEnter();
+    }
 }

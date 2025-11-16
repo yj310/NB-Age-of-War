@@ -1,5 +1,5 @@
 /// 게임 시작 화면
-function drawMainMenu() {
+function drawMainMenu(screen) {
     drawGameScreen();
 
     translate(gameScreen.x, gameScreen.y);
