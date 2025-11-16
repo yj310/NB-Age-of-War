@@ -1,6 +1,6 @@
 class Unit {
-    constructor(name, image, level) {
-        this.name = name;
+    constructor(id, image, level) {
+        this.id = id;
         this.image = image;
         this.level = level;
     }

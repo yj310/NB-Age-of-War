@@ -1,5 +1,7 @@
 class Frame {
-    constructor(width, height, color, strockColor) {
+    constructor(x, y, width, height, color, strockColor) {
+        this.x = x;
+        this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;

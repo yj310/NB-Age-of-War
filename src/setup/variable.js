@@ -10,10 +10,6 @@ let foundation = null;
 /// type: Frame
 let gameScreen = null;
 
-/// 게임 화면 시작 위치
-/// type: Position
-let screenStartPosition = null;
-
 /// 게임 상태
 /// type: GameState
 let gameState = GameState.mainMenu;

@@ -6,21 +6,24 @@ function initialData() {
 
     /// 전체 배경 프레임 초기화
     foundation = new Frame(
-        windowWidth,
-        windowHeight,
-        '#333333',
-        '#000000');
+        0, 0, // x, y
+        windowWidth, windowHeight, // width, height
+        '#333333', '#000000' // color, strockColor
+    );
 
     /// 게임 화면 프레임 초기화
     gameScreen = new Frame(
-        800,
-        600,
-        '#FFFFFF',
-        '#000000');
+        0, 0, // x, y
+        800, 600, // width, height
+        '#FFFFFF', '#000000' // color, strockColor
+    );
 
     /// 게임 상태 초기화
     gameState = GameState.mainMenu;
     currentScreen = new MainMenuScreen();
+
+    /// 지우기
+    currentScreen = new PlayingScreen();
 
     // 이미지 로드
     unit1ImageList = [

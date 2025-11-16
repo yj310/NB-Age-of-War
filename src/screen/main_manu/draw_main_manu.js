@@ -2,7 +2,7 @@
 function drawMainMenu() {
     drawGameScreen();
 
-    translate(screenStartPosition.x, screenStartPosition.y);
+    translate(gameScreen.x, gameScreen.y);
     textAlign(CENTER, CENTER);
 
 

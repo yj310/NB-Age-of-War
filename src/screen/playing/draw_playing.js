@@ -1,5 +1,5 @@
 
-function drawPlaying() {
+function drawPlaying(gameScreen) {
     drawGameScreen();
     drawEntity();
     drawInterface();
@@ -8,7 +8,7 @@ function drawPlaying() {
 function drawEntity() { }
 
 function drawInterface() {
-    translate(screenStartPosition.x, screenStartPosition.y);
+    translate(gameScreen.x, gameScreen.y);
     rectMode(CORNER);
 
     drawTopInterface();
@@ -19,16 +19,17 @@ function drawInterface() {
 
 function drawTopInterface() {
     /// 상단 인터페이스 설정
-    topInterfaceFrame = new Frame(gameScreen.width, 100, '#FFFFFF', '#000000');
-    topInterfaceStartPosition = new Position(
-        gameScreen.width - topInterfaceFrame.width,
-        0
+    topInterfaceFrame = new Frame(
+        gameScreen.width - gameScreen.width, // x
+        0, // y
+        gameScreen.width, 100, // width, height
+        '#FFFFFF', '#000000' // color, strockColor
     );
 
     /// 상단 인터페이스 프레임
     rect(
-        topInterfaceStartPosition.x,
-        topInterfaceStartPosition.y,
+        topInterfaceFrame.x,
+        topInterfaceFrame.y,
         topInterfaceFrame.width,
         topInterfaceFrame.height
     );
@@ -37,16 +38,17 @@ function drawTopInterface() {
 
 function drawBottomInterface() {
     /// 하단 인터페이스 설정
-    bottomInterfaceFrame = new Frame(gameScreen.width, 200, '#FFFFFF', '#000000');
-    bottomInterfaceStartPosition = new Position(
-        gameScreen.width - bottomInterfaceFrame.width,
-        gameScreen.height - bottomInterfaceFrame.height
+    bottomInterfaceFrame = new Frame(
+        gameScreen.width - gameScreen.width, // x
+        gameScreen.height - 200, // y
+        gameScreen.width, 200, // width, height
+        '#FFFFFF', '#000000' // color, strockColor
     );
 
     /// 하단 인터페이스 프레임
     rect(
-        bottomInterfaceStartPosition.x,
-        bottomInterfaceStartPosition.y,
+        bottomInterfaceFrame.x,
+        bottomInterfaceFrame.y,
         bottomInterfaceFrame.width,
         bottomInterfaceFrame.height
     );
@@ -65,8 +67,8 @@ function drawUnitList() {
 
     for (let i = 0; i < unitCount; i++) {
         rect(
-            bottomInterfaceStartPosition.x + margin + (unitWidth + padding) * i,
-            bottomInterfaceStartPosition.y + margin,
+            bottomInterfaceFrame.x + margin + (unitWidth + padding) * i,
+            bottomInterfaceFrame.y + margin,
             unitWidth,
             unitHeight
         );
@@ -75,16 +77,16 @@ function drawUnitList() {
         if (unitImage) {
             image(
                 unitImage,
-                bottomInterfaceStartPosition.x + margin + (unitWidth + padding) * i,
-                bottomInterfaceStartPosition.y + margin,
+                bottomInterfaceFrame.x + margin + (unitWidth + padding) * i,
+                bottomInterfaceFrame.y + margin,
                 unitWidth,
                 unitHeight
             );
         } else {
             // 이미지가 아직 로드되지 않았으면 사각형으로 표시
             rect(
-                bottomInterfaceStartPosition.x + margin + (unitWidth + padding) * i,
-                bottomInterfaceStartPosition.y + margin,
+                bottomInterfaceFrame.x + margin + (unitWidth + padding) * i,
+                bottomInterfaceFrame.y + margin,
                 unitWidth,
                 unitHeight
             );

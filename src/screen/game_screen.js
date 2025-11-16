@@ -13,7 +13,7 @@ class GameScreen {
     update(dt) { }
 
     // 매 프레임 그리기
-    render() { }
+    render(gameScreen) { }
 
     // 키 입력 처리
     keyPressed(key) { }

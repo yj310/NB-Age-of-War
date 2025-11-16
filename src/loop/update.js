@@ -2,16 +2,19 @@ function update() {
 
     // 전체 배경 프레임 업데이트
     foundation = new Frame(
-        max(windowWidth, gameScreen.width),
-        max(windowHeight, gameScreen.height),
-        foundation.color,
-        foundation.strockColor
+        0, 0, // x, y
+        max(windowWidth, gameScreen.width), // width
+        max(windowHeight, gameScreen.height), // height
+        foundation.color, // color
+        foundation.strockColor // strockColor
     );
 
-    // 게임 화면 시작 위치 업데이트
-    screenStartPosition = new Position(
+    /// 게임 화면 프레임 업데이트
+    gameScreen = new Frame(
         (foundation.width - gameScreen.width) / 2,
-        (foundation.height - gameScreen.height) / 2
+        (foundation.height - gameScreen.height) / 2, // x, y
+        gameScreen.width, gameScreen.height, // width, height
+        gameScreen.color, gameScreen.strockColor // color, strockColor
     );
 
     // 틱 업데이트

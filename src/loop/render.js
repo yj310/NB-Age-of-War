@@ -4,6 +4,6 @@ function render() {
 
 
     if (currentScreen instanceof GameScreen) {
-        currentScreen.render();
+        currentScreen.render(currentScreen);
     }
 }
