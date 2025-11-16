@@ -1,8 +1,11 @@
 class PlayingScreen extends GameScreen {
     constructor() {
         super();
+
         /// type: Unit[]
         this.units = [];
+        this.lastUnitId = -1;
+
         /// type: Button[]
         this.unitButtons = [];
 
@@ -32,20 +35,32 @@ class PlayingScreen extends GameScreen {
         this.setFirstStage();
     }
 
+    update(screen) {
+        this.units.forEach(unit => {
+            unit.update();
+        });
+    }
+
     render(screen) {
         if (!(screen instanceof GameScreen)) return;
         drawPlaying(screen);
 
+        translate(mainFrame.x, mainFrame.y);
         this.unitButtons.forEach(button => {
-            button.render(mainFrame);
+            button.render();
         });
-    }
 
+        this.units.forEach(unit => {
+            unit.render();
+        });
+
+        resetMatrix();
+    }
 
     mousePressed(mouseX, mouseY) {
         this.unitButtons.forEach(button => {
             if (button.contains(mouseX, mouseY)) {
-                this.addUnit(button.unit);
+                button.onPressed();
             }
         });
     }
@@ -61,25 +76,33 @@ class PlayingScreen extends GameScreen {
     }
 
     setFirstStage() {
+        this.unitButtons = [];
+        this.addUnitButton(0, (id) => new Unit1(id));
+        this.addUnitButton(1, (id) => new Unit2(id));
+        this.addUnitButton(2, (id) => new Unit3(id));
+        this.addUnitButton(3, (id) => new Unit4(id));
+        this.addUnitButton(4, (id) => new Unit5(id));
+    }
+
+    addUnitButton(index, createUnit) {
         const margin = 15;
         const padding = 10;
         const unitWidth = 80;
         const unitHeight = 80;
 
-        this.unitButtons = [];
-        for (let i = 0; i < 5; i++) {
+        const unitId = this.lastUnitId + 1;
 
-            this.unitButtons.push(
-                new ImageButton(
-                    mainFrame.x + this.bottomInterfaceFrame.x + margin + ((unitWidth + padding) * i),
-                    mainFrame.y + this.bottomInterfaceFrame.y + margin,
-                    unitWidth,
-                    unitHeight,
-                    unit1ImageList[i],
-                    () => this.addUnit(new Unit(1)),
-                )
-            );
-        }
+        this.unitButtons.push(
+            new ImageButton(
+                this.bottomInterfaceFrame.x + margin + ((unitWidth + padding) * index),
+                this.bottomInterfaceFrame.y + margin,
+                unitWidth,
+                unitHeight,
+                unit1ImageList[index],
+                () => this.addUnit(createUnit(unitId)),
+            )
+        );
+
+        this.lastUnitId = unitId;
     }
-
 }

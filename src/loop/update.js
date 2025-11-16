@@ -31,7 +31,7 @@ function update() {
 function gameTick() {
     tick++;
 
-
-    // updatePlayer();
-    // updateEnemies();
+    if (currentScreen instanceof GameScreen) {
+        currentScreen.update(currentScreen);
+    }
 }

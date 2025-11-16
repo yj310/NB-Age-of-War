@@ -7,9 +7,12 @@ function keyPressed() {
 
 /// 마우스 입력
 function mousePressed() {
+    mouseXInMainFrame = mouseX - mainFrame.x;
+    mouseYInMainFrame = mouseY - mainFrame.y;
+
     /// mouseX, mouseY
     if (currentScreen instanceof GameScreen) {
-        currentScreen.mousePressed(mouseX, mouseY);
+        currentScreen.mousePressed(mouseXInMainFrame, mouseYInMainFrame);
     }
 }
 

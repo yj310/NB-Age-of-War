@@ -10,7 +10,7 @@ class GameScreen {
     onExit() { }
 
     // 매 프레임 업데이트 (dt: 초 단위 delta time)
-    update(dt) { }
+    update(screen) { }
 
     // 매 프레임 그리기
     render(screen) { }
