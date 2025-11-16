@@ -1,4 +1,4 @@
-function drawGameScreen(color = "#FFFFFF") {
+function drawMainFrame(color = "#FFFFFF") {
     rectMode(CORNER);
     fill(color);
 

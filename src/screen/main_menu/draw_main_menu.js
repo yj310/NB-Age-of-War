@@ -1,6 +1,6 @@
 /// 게임 시작 화면
 function drawMainMenu(screen) {
-    drawGameScreen();
+    drawMainFrame();
 
     translate(mainFrame.x, mainFrame.y);
     textAlign(CENTER, CENTER);

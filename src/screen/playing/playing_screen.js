@@ -2,6 +2,12 @@ class PlayingScreen extends GameScreen {
     constructor() {
         super();
 
+        this.mp = 0;
+        this.maxMp = 100;
+
+        this.hp = 100;
+        this.maxHp = 100;
+
         /// type: Unit[]
         this.units = [];
         this.lastUnitId = -1;
@@ -10,19 +16,19 @@ class PlayingScreen extends GameScreen {
         this.unitButtons = [];
 
         /// type: Frame[]
-        this.topInterfaceFrames = [];
-        this.bottomInterfaceFrames = [];
-
-        /// type: Image[]
-        // this.unitImages = [];
-
         this.topInterfaceFrame = new Frame(
             mainFrame.width - mainFrame.width, // x
             0, // y
             mainFrame.width, 100, // width, height
             '#FFFFFF', '#000000' // color, strockColor
         );
-
+        this.hpBarFrame = new Frame(
+            this.topInterfaceFrame.x,
+            this.topInterfaceFrame.y + this.topInterfaceFrame.height - 10,
+            this.topInterfaceFrame.width,
+            10,
+            '#FFFFFF', '#000000'
+        );
         this.bottomInterfaceFrame = new Frame(
             mainFrame.width - mainFrame.width, // x
             mainFrame.height - 200, // y
@@ -36,6 +42,9 @@ class PlayingScreen extends GameScreen {
     }
 
     update(screen) {
+        if (this.mp < this.maxMp && tick % 10 === 0) {
+            this.mp += 1;
+        }
         this.units.forEach(unit => {
             unit.update();
         });
@@ -43,13 +52,23 @@ class PlayingScreen extends GameScreen {
 
     render(screen) {
         if (!(screen instanceof GameScreen)) return;
-        drawPlaying(screen);
+
+        /// 메인 프레임
+        drawMainFrame();
 
         translate(mainFrame.x, mainFrame.y);
+        rectMode(CORNER);
+
+        /// 인터페이스
+        this.drawTopInterface();
+        this.drawBottomInterface();
+
+        /// 유닛 버튼
         this.unitButtons.forEach(button => {
             button.render();
         });
 
+        /// 유닛
         this.units.forEach(unit => {
             unit.render();
         });
@@ -105,4 +124,33 @@ class PlayingScreen extends GameScreen {
 
         this.lastUnitId = unitId;
     }
+
+
+    /// 상단 인터페이스 프레임
+    drawTopInterface() {
+        rect(
+            this.topInterfaceFrame.x,
+            this.topInterfaceFrame.y,
+            this.topInterfaceFrame.width,
+            this.topInterfaceFrame.height
+        );
+
+        textAlign(LEFT, TOP);
+        textSize(16);
+        fill('#000000');
+        text('MP: ' + this.mp, this.topInterfaceFrame.x + 10, this.topInterfaceFrame.y + 10);
+        text('HP: ' + this.hp, this.topInterfaceFrame.x + 10, this.topInterfaceFrame.y + 30);
+        noFill();
+    }
+
+    /// 하단 인터페이스 프레임
+    drawBottomInterface() {
+        rect(
+            this.bottomInterfaceFrame.x,
+            this.bottomInterfaceFrame.y,
+            this.bottomInterfaceFrame.width,
+            this.bottomInterfaceFrame.height
+        );
+    }
+
 }
