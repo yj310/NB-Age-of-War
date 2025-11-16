@@ -1,5 +1,6 @@
-function drawGameScreen() {
+function drawGameScreen(color = "#FFFFFF") {
     rectMode(CORNER);
+    fill(color);
 
     if (windowWidth > gameScreen.width) {
         rectMode(CENTER);
@@ -12,8 +13,3 @@ function drawGameScreen() {
 
     resetMatrix();
 }
-
-function drawEntity() {
-}
-
-

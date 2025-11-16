@@ -2,33 +2,44 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>p5.js Project</title>
-    <!-- p5.js 라이브러리 추가 -->
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p5.js Project</title>
+  <!-- p5.js 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
 </head>
 
 <body>
-    <!--model-->
-    <script src="model/frame.js"></script>
-    <script src="model/position.js"></script>
-    <script src="model/unit.js"></script>
+  <!--model-->
+  <script src="src/model/frame.js"></script>
+  <script src="src/model/position.js"></script>
+  <script src="src/model/unit.js"></script>
 
-    <!--setup-->
-    <script src="setup/variable.js"></script>
-    <script src="setup/initial_data.js"></script>
+  <!--screen-->
+  <script src="src/screen/game_screen.js"></script>
+  <script src="src/screen/game_state.js"></script>
+  <script src="src/screen/main_manu_screen.js"></script>
+  <script src="src/screen/playing_screen.js"></script>
 
-    <!-- loop -->
-    <script src="loop/interactions.js"></script>
-    <script src="loop/draw.js"></script>
-    <script src="loop/update.js"></script>
-    
-    <!--interface-->
-    <script src="interface/draw_interface.js"></script>
+  <!--setup-->
+  <script src="src/setup/variable.js"></script>
+  <script src="src/setup/initial_data.js"></script>
 
-    <!-- Main -->
-    <script src="main.js"></script>
+  <!-- loop -->
+  <script src="src/loop/draw/draw_game_over.js"></script>
+  <script src="src/loop/draw/draw_game_screen.js"></script>
+  <script src="src/loop/draw/draw_main_manu.js"></script>
+  <script src="src/loop/draw/draw_manual.js"></script>
+  <script src="src/loop/draw/draw_paused.js"></script>
+  <script src="src/loop/draw/draw_playing.js"></script>
+  <script src="src/loop/draw/draw_settings.js"></script>
+  <script src="src/loop/draw/draw.js"></script>
+  <script src="src/loop/interactions.js"></script>
+  <script src="src/loop/update.js"></script>
+  <script src="src/loop/render.js"></script>
+
+  <!-- Main -->
+  <script src="src/main.js"></script>
 </body>
 
 </html>

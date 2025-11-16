@@ -1,20 +1,48 @@
+
+function drawPlaying() {
+    drawGameScreen();
+    drawEntity();
+    drawInterface();
+}
+
+function drawEntity() { }
+
 function drawInterface() {
     translate(screenStartPosition.x, screenStartPosition.y);
     rectMode(CORNER);
 
+    drawTopInterface();
+    drawBottomInterface();
+
+    resetMatrix();
+}
+
+function drawTopInterface() {
+    /// 상단 인터페이스 설정
+    topInterfaceFrame = new Frame(gameScreen.width, 100, '#FFFFFF', '#000000');
+    topInterfaceStartPosition = new Position(
+        gameScreen.width - topInterfaceFrame.width,
+        0
+    );
+
+    /// 상단 인터페이스 프레임
+    rect(
+        topInterfaceStartPosition.x,
+        topInterfaceStartPosition.y,
+        topInterfaceFrame.width,
+        topInterfaceFrame.height
+    );
+
+}
+
+function drawBottomInterface() {
+    /// 하단 인터페이스 설정
     bottomInterfaceFrame = new Frame(gameScreen.width, 200, '#FFFFFF', '#000000');
     bottomInterfaceStartPosition = new Position(
         gameScreen.width - bottomInterfaceFrame.width,
         gameScreen.height - bottomInterfaceFrame.height
     );
 
-    drawBottomInterface();
-
-
-    resetMatrix();
-}
-
-function drawBottomInterface() {
     /// 하단 인터페이스 프레임
     rect(
         bottomInterfaceStartPosition.x,
