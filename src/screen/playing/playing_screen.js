@@ -1,5 +1,5 @@
 const unitStartX = 10;
-const unitStartY = 200;
+const unitStartY = 300;
 
 class PlayingScreen extends GameScreen {
     constructor() {
