@@ -17,7 +17,7 @@ class Button {
     }
 
     render() {
-        rect(x, y, unitWidth, unitHeight);
+        rect(this.x, this.y, this.width, this.height);
     }
 }
 
@@ -27,14 +27,24 @@ class ImageButton extends Button {
         width, height,
         image,
         onPressed,
-        color = '#FFFFFF',
-        strockColor = '#000000'
+        color,
+        strockColor
     ) {
         super(x, y, width, height, onPressed, color, strockColor);
         this.image = image;
     }
 
     render() {
+        if (this.color) {
+            fill(this.color);
+        } else {
+            noFill();
+        }
+        if (this.strockColor) {
+            stroke(this.strockColor);
+        } else {
+            noStroke();
+        }
         rect(this.x, this.y, this.width, this.height);
         if (this.image) {
             image(this.image, this.x, this.y, this.width, this.height);
@@ -57,10 +67,14 @@ class UnitButton extends ImageButton {
     }
 
     render() {
+        fill(this.color);
+        stroke(this.strockColor);
         rect(this.x, this.y, this.width, this.height);
         if (this.image) {
             image(this.image, this.x, this.y, this.width, this.height);
         }
+
+        noStroke();
 
         textAlign(CENTER, TOP);
         textSize(15);

@@ -1,6 +1,15 @@
 let tick = 0;
 let lastTickTime = 0;
-const TICK_INTERVAL = 100; // 100ms = 0.1초마다 한 틱 (1초에 10틱)
+let tickInterval = 100; // 100ms = 0.1초마다 한 틱 (1초에 10틱)
+let TICK_INTERVAL = {
+    normal: 100,
+    fast_2_times: 50,
+    fast_4_times: 10,
+    fast_8_times: 5,
+    pause: null,
+}
+
+
 
 /// 전체 배경
 /// type: Frame
@@ -21,6 +30,10 @@ let currentScreen = null;
 /// 이미지 
 /// type: Image[]
 let unit1ImageList = null;
+
+/// 아이콘 에셋
+/// type: Image[]
+let assetList;
 
 /// 홈 이미지
 /// type: Image

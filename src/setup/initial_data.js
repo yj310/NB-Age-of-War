@@ -30,5 +30,10 @@ function initialData() {
         loadImage('assets/images/unit_1_4.png'),
         loadImage('assets/images/unit_1_5.png'),
     ];
+    assetList = {
+        "pause": loadImage('assets/images/pause.png'),
+        "play": loadImage('assets/images/play.png'),
+        "fast_forward": loadImage('assets/images/fast_forward.png'),
+    };
     homeImage = loadImage('assets/images/home.png');
 }

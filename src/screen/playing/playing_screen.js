@@ -29,6 +29,41 @@ class PlayingScreen extends GameScreen {
         /// type: Button[]
         this.unitButtons = [];
 
+        /// type: Button
+        this.buttons = [
+            new ImageButton(
+                mainFrame.width - 80,
+                10,
+                20, 20,
+                assetList["pause"],
+                () => tickInterval = TICK_INTERVAL.pause,
+            ),
+            new ImageButton(
+                mainFrame.width - 55,
+                10,
+                20, 20,
+                assetList["play"],
+                () => tickInterval = TICK_INTERVAL.normal,
+            ),
+            new ImageButton(
+                mainFrame.width - 30,
+                10,
+                20, 20,
+                assetList["fast_forward"],
+                () => {
+                    if (tickInterval == TICK_INTERVAL.normal) {
+                        tickInterval = TICK_INTERVAL.fast_2_times;
+                    } else if (tickInterval == TICK_INTERVAL.fast_2_times) {
+                        tickInterval = TICK_INTERVAL.fast_4_times;
+                    } else if (tickInterval == TICK_INTERVAL.fast_4_times) {
+                        tickInterval = TICK_INTERVAL.fast_8_times;
+                    } else {
+                        tickInterval = TICK_INTERVAL.normal;
+                    }
+                },
+            )
+        ];
+
         /// type: Frame[]
         this.topInterfaceFrame = new Frame(
             mainFrame.width - mainFrame.width, // x
@@ -85,6 +120,12 @@ class PlayingScreen extends GameScreen {
 
     mousePressed(mouseX, mouseY) {
         this.unitButtons.forEach(button => {
+            if (button.contains(mouseX, mouseY)) {
+                button.onPressed();
+            }
+        });
+
+        this.buttons.forEach(button => {
             if (button.contains(mouseX, mouseY)) {
                 button.onPressed();
             }
@@ -199,11 +240,6 @@ class PlayingScreen extends GameScreen {
             homeWidth, homeHeight
         );
 
-        /// 유닛 버튼
-        this.unitButtons.forEach(button => {
-            button.render();
-        });
-
         /// 유닛
         this.units.forEach(unit => {
             unit.render();
@@ -213,6 +249,9 @@ class PlayingScreen extends GameScreen {
 
     /// 상단 인터페이스 프레임
     drawTopInterface() {
+        fill(this.topInterfaceFrame.color);
+        stroke(this.topInterfaceFrame.strockColor);
+
         rect(
             this.topInterfaceFrame.x,
             this.topInterfaceFrame.y,
@@ -220,22 +259,40 @@ class PlayingScreen extends GameScreen {
             this.topInterfaceFrame.height
         );
 
+        noStroke();
+
         textAlign(LEFT, TOP);
         textSize(16);
         fill('#000000');
         text('MP: ' + this.mp, this.topInterfaceFrame.x + 10, this.topInterfaceFrame.y + 10);
         text('HP: ' + this.hp, this.topInterfaceFrame.x + 10, this.topInterfaceFrame.y + 30);
         noFill();
+
+        this.buttons.forEach(button => {
+            button.render();
+        });
     }
 
     /// 하단 인터페이스 프레임
     drawBottomInterface() {
+        fill(this.bottomInterfaceFrame.color);
+        stroke(this.bottomInterfaceFrame.strockColor);
         rect(
             this.bottomInterfaceFrame.x,
             this.bottomInterfaceFrame.y,
             this.bottomInterfaceFrame.width,
             this.bottomInterfaceFrame.height
         );
+
+        noStroke();
+        noFill();
+
+
+
+        /// 유닛 버튼
+        this.unitButtons.forEach(button => {
+            button.render();
+        });
     }
 
 }

@@ -21,9 +21,11 @@ function update() {
     // 지금 시간이 마지막 틱 시간보다 TICK_INTERVAL 이상 지났다면
     // gameTick() 함수 호출
     const currentTime = millis();
-    while (currentTime - lastTickTime >= TICK_INTERVAL) {
-        gameTick();             // 로직 업데이트
-        lastTickTime += TICK_INTERVAL;
+    if (tickInterval) {
+        while (currentTime - lastTickTime >= tickInterval) {
+            gameTick();             // 로직 업데이트
+            lastTickTime = currentTime - (currentTime % tickInterval);
+        }
     }
 }
 
