@@ -30,4 +30,5 @@ function initialData() {
         loadImage('assets/images/unit_1_4.png'),
         loadImage('assets/images/unit_1_5.png'),
     ];
+    homeImage = loadImage('assets/images/home.png');
 }

@@ -1,5 +1,13 @@
-const unitStartX = 10;
-const unitStartY = 300;
+const homeX = 10;
+
+const homeHorizontalRatio = 4;
+const homeVerticalRatio = 3;
+const magnification = 40;
+const homeWidth = homeHorizontalRatio * magnification;
+const homeHeight = homeVerticalRatio * magnification;
+
+const unitStartX = homeX + homeWidth;
+const floorY = 320;
 
 class PlayingScreen extends GameScreen {
     constructor() {
@@ -65,19 +73,12 @@ class PlayingScreen extends GameScreen {
         translate(mainFrame.x, mainFrame.y);
         rectMode(CORNER);
 
+        /// 게임 필드
+        this.drawGameField();
+
         /// 인터페이스
         this.drawTopInterface();
         this.drawBottomInterface();
-
-        /// 유닛 버튼
-        this.unitButtons.forEach(button => {
-            button.render();
-        });
-
-        /// 유닛
-        this.units.forEach(unit => {
-            unit.render();
-        });
 
         resetMatrix();
     }
@@ -103,7 +104,7 @@ class PlayingScreen extends GameScreen {
             unitType.image,
             1,
             unitStartX,
-            unitStartY,
+            floorY - unitType.height,
             unitType.width,
             unitType.height,
             unitType.velocityX,
@@ -189,6 +190,26 @@ class PlayingScreen extends GameScreen {
         );
     }
 
+
+    /// 게임 필드 그리기
+    drawGameField() {
+        image(
+            homeImage,
+            homeX, floorY - homeHeight,
+            homeWidth, homeHeight
+        );
+
+        /// 유닛 버튼
+        this.unitButtons.forEach(button => {
+            button.render();
+        });
+
+        /// 유닛
+        this.units.forEach(unit => {
+            unit.render();
+        });
+
+    }
 
     /// 상단 인터페이스 프레임
     drawTopInterface() {

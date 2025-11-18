@@ -20,9 +20,16 @@ class Unit {
 
     render() {
         if (this.image) {
-            image(this.image, this.x, this.y, this.width, this.height);
+            image(
+                this.image,
+                this.x, this.y,
+                this.width, this.height
+            );
         } else {
-            rect(this.x, this.y, this.width, this.height);
+            rect(
+                this.x, this.y,
+                this.width, this.height
+            );
         }
     }
 

@@ -18,9 +18,13 @@ let gameState = GameState.mainMenu;
 /// type: Screen
 let currentScreen = null;
 
-/// 이미지
+/// 이미지 
 /// type: Image[]
 let unit1ImageList = null;
+
+/// 홈 이미지
+/// type: Image
+let homeImage = null;
 
 /// 이전 마우스 위치
 /// type: int
