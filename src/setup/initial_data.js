@@ -36,4 +36,5 @@ function initialData() {
         "fast_forward": loadImage('assets/images/fast_forward.png'),
     };
     homeImage = loadImage('assets/images/home.png');
+    enemyHomeImage = loadImage("assets/images/home.png");
 }

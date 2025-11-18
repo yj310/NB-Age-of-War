@@ -39,6 +39,12 @@ let assetList;
 /// type: Image
 let homeImage = null;
 
+
+// 적 홈 이미지
+/// type: Image
+let enemyHomeImage = null;
+
+
 /// 이전 마우스 위치
 /// type: int
 let prevMouseX = 0;
