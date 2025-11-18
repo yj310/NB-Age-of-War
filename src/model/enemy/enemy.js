@@ -1,17 +1,5 @@
-class Unit {
-  constructor(
-    id,
-    image,
-    level,
-    x,
-    y,
-    width,
-    height,
-    velocityX,
-    velocityY,
-    hp,
-    type
-  ) {
+class Enemy {
+  constructor(id, image, level, x, y, width, height, velocityX, velocityY, hp, type) {
     this.id = id;
     this.image = image;
     this.level = level;
@@ -22,7 +10,7 @@ class Unit {
     this.velocityX = velocityX;
     this.velocityY = velocityY;
     this.hp = hp;
-    this.type = type;
+    this.type = this.type
   }
 
   render() {
@@ -56,13 +44,13 @@ class Unit {
 
       if (this.isColliding(other)) {
         // 🔹 UNIT과 충돌 → 이동 멈춤
-        if (other.type === EntityType.UNIT) {
+        if (other.type === "unit") {
           this.x = prevX;
           this.y = prevY;
         }
 
         // 🔹 공격(hitbox)과 충돌 → HP 감소
-        if (other.type === EntityType.ATTACK) {
+        if (other.type === "attack") {
           this.hp -= other.damage ?? 1; // damage 없으면 1 기본
           console.log(`Enemy ${this.id} hit! HP: ${this.hp}`);
         }

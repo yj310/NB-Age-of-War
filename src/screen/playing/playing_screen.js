@@ -3,22 +3,12 @@ const floorY = 320;
 class PlayingScreen extends GameScreen {
   constructor() {
     super();
-
-    this.home = new Home();
+    
     this.enemyHome = new EnemyHome();
 
-    this.mp = 0;
-    this.maxMp = 100;
+    this.playerManager = new PlayerManager();
 
-    this.hp = 100;
-    this.maxHp = 100;
-
-    /// type: UnitType[]
     this.unitTypes = [];
-
-    /// type: Unit[]
-    this.units = [];
-    this.lastUnitId = -1;
 
     /// type: Button[]
     this.unitButtons = [];
@@ -93,12 +83,7 @@ class PlayingScreen extends GameScreen {
   }
 
   update(screen) {
-    if (this.mp < this.maxMp && tick % 10 === 0) {
-      this.mp += 1;
-    }
-    this.units.forEach((unit) => {
-      unit.update();
-    });
+    this.playerManager.update();
   }
 
   render(screen) {
@@ -117,6 +102,8 @@ class PlayingScreen extends GameScreen {
     this.drawTopInterface();
     this.drawBottomInterface();
 
+    this.playerManager.render();
+
     resetMatrix();
   }
 
@@ -134,77 +121,9 @@ class PlayingScreen extends GameScreen {
     });
   }
 
-  addUnit(unitType) {
-    if (!(unitType instanceof UnitType)) return;
-
-    /// MP 가 부족하면 유닛을 추가하지 않음
-    if (this.mp < unitType.mpCost) return;
-    this.mp -= unitType.mpCost;
-
-    const unitId = this.lastUnitId + 1;
-    const unit = new Unit(
-      unitId,
-      unitType.image,
-      1,
-      this.home.x + this.home.width,
-      floorY - unitType.height,
-      unitType.width,
-      unitType.height,
-      unitType.velocityX,
-      unitType.velocityY
-    );
-    this.lastUnitId = unitId;
-    this.units.push(unit);
-  }
-
-  removeUnit(unit) {
-    if (!(unit instanceof Unit)) return;
-    this.units = this.units.filter((u) => u !== unit);
-  }
-
   setFirstStage() {
-    this.unitTypes = [
-      new UnitType(
-        unit1ImageList[0], // image
-        10, // mpCost
-        30, // width
-        30, // height
-        0.4, // velocityX
-        0 // velocityY
-      ),
-      new UnitType(
-        unit1ImageList[1], // image
-        15, // mpCost
-        30, // width
-        30, // height
-        0.4, // velocityX
-        0 // velocityY
-      ),
-      new UnitType(
-        unit1ImageList[2], // image
-        20, // mpCost
-        30, // width
-        30, // height
-        0.4, // velocityX
-        0 // velocityY
-      ),
-      new UnitType(
-        unit1ImageList[3], // image
-        30, // mpCost
-        30, // width
-        30, // height
-        0.4, // velocityX
-        0 // velocityY
-      ),
-      new UnitType(
-        unit1ImageList[4], // image
-        50, // mpCost
-        30, // width
-        30, // height
-        0.4, // velocityX
-        0 // velocityY
-      ),
-    ];
+    this.unitTypes = createStageUnitConfig(1, unit1ImageList)
+    this.playerManager.setUnitTypes(this.unitTypes);
 
     this.unitButtons = [];
     this.addUnitButton(0);
@@ -227,7 +146,7 @@ class PlayingScreen extends GameScreen {
         unitWidth,
         unitHeight,
         unit1ImageList[index],
-        () => this.addUnit(this.unitTypes[index]),
+        () => this.playerManager.addUnit(this.unitTypes[index]),
         this.unitTypes[index].mpCost
       )
     );
@@ -235,13 +154,15 @@ class PlayingScreen extends GameScreen {
 
   /// 게임 필드 그리기
   drawGameField() {
-    this.home.render();
+    // this.home.render();
     this.enemyHome.render();
+    this.playerManager.render();
+
 
     /// 유닛
-    this.units.forEach((unit) => {
-      unit.render();
-    });
+    // this.units.forEach((unit) => {
+    //   unit.render();
+    // });
   }
 
   /// 상단 인터페이스 프레임
@@ -262,12 +183,12 @@ class PlayingScreen extends GameScreen {
     textSize(16);
     fill("#000000");
     text(
-      "MP: " + this.mp,
+      "MP: " + this.playerManager.mp,
       this.topInterfaceFrame.x + 10,
       this.topInterfaceFrame.y + 10
     );
     text(
-      "HP: " + this.hp,
+      "HP: " + this.playerManager.hp,
       this.topInterfaceFrame.x + 10,
       this.topInterfaceFrame.y + 30
     );

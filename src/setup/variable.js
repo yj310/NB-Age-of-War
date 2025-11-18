@@ -49,3 +49,8 @@ let enemyHomeImage = null;
 /// type: int
 let prevMouseX = 0;
 let prevMouseY = 0;
+
+const EntityType = Object.freeze({
+  UNIT: "unit",
+  ATTACK: "attack",
+});
