@@ -6,6 +6,7 @@ class UnitType {
         height,
         velocityX,
         velocityY,
+        hp
     ) {
         this.image = image;
         this.mpCost = mpCost;
@@ -13,5 +14,6 @@ class UnitType {
         this.height = height;
         this.velocityX = velocityX;
         this.velocityY = velocityY;
+        this.hp = hp;
     }
 }

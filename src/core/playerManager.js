@@ -12,14 +12,13 @@ class PlayerManager {
     this.maxLevel = 3;
   }
 
-  update() {
+  update(others) {
     if (this.mp < this.maxMp && tick % 10 === 0) {
       this.mp += 1;
     }
 
-    this.units.forEach((unit) => {
-      unit.update();
-    });
+    this.units.forEach((unit) => unit.update(others));
+
   }
 
   render() {
@@ -49,6 +48,7 @@ class PlayerManager {
       unitType.height,
       unitType.velocityX,
       unitType.velocityY,
+      unitType.hp,
       EntityType.UNIT
     );
     this.lastUnitId = unitId;

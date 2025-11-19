@@ -10,7 +10,7 @@ class Enemy {
     this.velocityX = velocityX;
     this.velocityY = velocityY;
     this.hp = hp;
-    this.type = this.type
+    this.type = type
   }
 
   render() {
@@ -44,16 +44,16 @@ class Enemy {
 
       if (this.isColliding(other)) {
         // 🔹 UNIT과 충돌 → 이동 멈춤
-        if (other.type === "unit") {
+        if (other.type === EntityType.UNIT) {
           this.x = prevX;
           this.y = prevY;
         }
 
         // 🔹 공격(hitbox)과 충돌 → HP 감소
-        if (other.type === "attack") {
-          this.hp -= other.damage ?? 1; // damage 없으면 1 기본
-          console.log(`Enemy ${this.id} hit! HP: ${this.hp}`);
-        }
+        // if (other.type === "attack") {
+        //   this.hp -= other.damage ?? 1; // damage 없으면 1 기본
+        //   console.log(`Enemy ${this.id} hit! HP: ${this.hp}`);
+        // }
       }
     }
   }

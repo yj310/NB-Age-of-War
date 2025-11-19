@@ -19,8 +19,8 @@ class PlayingScreen extends GameScreen {
   }
 
   update(screen) {
-    this.playerManager.update();
-    this.enemyManager.update();
+    this.playerManager.update(this.enemyManager.enemies);
+    this.enemyManager.update(this.playerManager.units);
 
   }
 
@@ -50,7 +50,7 @@ class PlayingScreen extends GameScreen {
     this.unitTypes = createStageUnitConfig(1, unit1ImageList);
     this.playerManager.setUnitTypes(this.unitTypes);
     this.interfaceManager.setUnitTypes(this.unitTypes);
-    this.enemyManager.setUnitTypes(this.unitTypes);
+    this.enemyManager.setEnemyTypes(this.unitTypes);
     this.interfaceManager.setPlayerManager(this.playerManager);
     this.interfaceManager.setEnemyManager(this.enemyManager);
 

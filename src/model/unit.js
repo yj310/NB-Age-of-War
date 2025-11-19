@@ -43,6 +43,7 @@ class Unit {
   }
 
   update(others = []) {
+
     const prevX = this.x;
     const prevY = this.y;
 
@@ -56,16 +57,16 @@ class Unit {
 
       if (this.isColliding(other)) {
         // 🔹 UNIT과 충돌 → 이동 멈춤
-        if (other.type === EntityType.UNIT) {
+        if (other.type === EntityType.ENEMY) {
           this.x = prevX;
           this.y = prevY;
         }
 
         // 🔹 공격(hitbox)과 충돌 → HP 감소
-        if (other.type === EntityType.ATTACK) {
-          this.hp -= other.damage ?? 1; // damage 없으면 1 기본
-          console.log(`Enemy ${this.id} hit! HP: ${this.hp}`);
-        }
+        // if (other.type === EntityType.ATTACK) {
+        //   this.hp -= other.damage ?? 1; // damage 없으면 1 기본
+        //   console.log(`Enemy ${this.id} hit! HP: ${this.hp}`);
+        // }
       }
     }
   }
