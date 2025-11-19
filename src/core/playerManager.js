@@ -4,7 +4,7 @@ class PlayerManager {
     this.units = [];
     this.unitTypes = [];
     this.lastUnitId = 0;
-    this.mp = 0;
+    this.mp = 50;
     this.maxMp = 100;
     this.hp = 100;
     this.maxHp = 100;
@@ -32,8 +32,6 @@ class PlayerManager {
   }
 
   addUnit(unitType) {
-    console.log("unitType", unitType);
-    console.log("mp", this.mp);
     if (!(unitType instanceof UnitType)) return;
 
     /// MP 가 부족하면 유닛을 추가하지 않음
