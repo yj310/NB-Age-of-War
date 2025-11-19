@@ -5,7 +5,7 @@ class EnemyHome {
     this.magnification = 40;
     this.width = this.horizontalRatio * this.magnification;
     this.height = this.verticalRatio * this.magnification;
-    this.x = x - this.width - 20;
+    this.x = x - this.width - 40;
     this.y = y - this.height;
   }
 

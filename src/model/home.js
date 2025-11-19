@@ -1,5 +1,5 @@
 class Home {
-  constructor(x = 20, y = floorY) {
+  constructor(x = 40, y = floorY) {
     this.horizontalRatio = 4;
     this.verticalRatio = 3;
     this.magnification = 40;

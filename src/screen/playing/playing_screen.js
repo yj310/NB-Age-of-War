@@ -4,52 +4,14 @@ class PlayingScreen extends GameScreen {
   constructor() {
     super();
 
-    this.enemyHome = new EnemyHome();
     this.playerManager = new PlayerManager();
     this.interfaceManager = new InterfaceManager();
+    this.enemyManager = new EnemyManager();
 
     this.unitTypes = [];
 
     /// type: Button[]
     this.unitButtons = [];
-
-    /// type: Button
-    this.buttons = [
-      new ImageButton(
-        mainFrame.width - 80,
-        10,
-        20,
-        20,
-        assetList["pause"],
-        () => (tickInterval = TICK_INTERVAL.pause)
-      ),
-      new ImageButton(
-        mainFrame.width - 55,
-        10,
-        20,
-        20,
-        assetList["play"],
-        () => (tickInterval = TICK_INTERVAL.normal)
-      ),
-      new ImageButton(
-        mainFrame.width - 30,
-        10,
-        20,
-        20,
-        assetList["fast_forward"],
-        () => {
-          if (tickInterval == TICK_INTERVAL.normal) {
-            tickInterval = TICK_INTERVAL.fast_2_times;
-          } else if (tickInterval == TICK_INTERVAL.fast_2_times) {
-            tickInterval = TICK_INTERVAL.fast_4_times;
-          } else if (tickInterval == TICK_INTERVAL.fast_4_times) {
-            tickInterval = TICK_INTERVAL.fast_8_times;
-          } else {
-            tickInterval = TICK_INTERVAL.normal;
-          }
-        }
-      ),
-    ];
   }
 
   onEnter() {
@@ -58,6 +20,8 @@ class PlayingScreen extends GameScreen {
 
   update(screen) {
     this.playerManager.update();
+    this.enemyManager.update();
+
   }
 
   render(screen) {
@@ -73,26 +37,22 @@ class PlayingScreen extends GameScreen {
 
     this.interfaceManager.render();
     this.playerManager.render();
+    this.enemyManager.render();
 
     resetMatrix();
   }
 
   mousePressed(x, y) {
     this.interfaceManager.mousePressed(x, y);
-
-    this.buttons.forEach((button) => {
-      if (button.contains(x, y)) {
-        button.onPressed();
-      }
-    });
   }
 
   setFirstStage() {
     this.unitTypes = createStageUnitConfig(1, unit1ImageList);
     this.playerManager.setUnitTypes(this.unitTypes);
     this.interfaceManager.setUnitTypes(this.unitTypes);
+    this.enemyManager.setUnitTypes(this.unitTypes);
     this.interfaceManager.setPlayerManager(this.playerManager);
-    this.interfaceManager.setButtons(this.buttons);
+    this.interfaceManager.setEnemyManager(this.enemyManager);
 
     this.unitButtons = [];
     this.interfaceManager.addUnitButton(0);
@@ -104,13 +64,7 @@ class PlayingScreen extends GameScreen {
 
   /// 게임 필드 그리기
   drawGameField() {
-    // this.home.render();
-    this.enemyHome.render();
     this.playerManager.render();
-
-    /// 유닛
-    // this.units.forEach((unit) => {
-    //   unit.render();
-    // });
+    this.enemyManager.render();
   }
 }
