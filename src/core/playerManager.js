@@ -2,6 +2,7 @@ class PlayerManager {
   constructor() {
     this.home = new Home();
     this.units = [];
+    this.spawnQueue = []; // 대기 유닛
     this.unitTypes = [];
     this.lastUnitId = 0;
     this.mp = 50;
@@ -16,9 +17,10 @@ class PlayerManager {
     if (this.mp < this.maxMp && tick % 10 === 0) {
       this.mp += 1;
     }
-
     this.units.forEach((unit) => unit.update(others));
 
+    // 유닛 스폰 체크
+    this.trySpawnUnitsFromQueue();
   }
 
   render() {
@@ -52,10 +54,29 @@ class PlayerManager {
       EntityType.UNIT
     );
     this.lastUnitId = unitId;
-    this.units.push(unit);
+    
+    // 바로 스폰하지 않고 대기열에 넣기
+    this.spawnQueue.push(unit);
   }
   removeUnit(unit) {
     if (!(unit instanceof Unit)) return;
     this.units = this.units.filter((u) => u !== unit);
+  }
+
+  trySpawnUnitsFromQueue() {
+    if (this.spawnQueue.length === 0) return;
+    if (!this.canSpawnUnit()) return;
+
+    const nextUnit = this.spawnQueue.shift();
+    this.units.push(nextUnit);
+  }
+
+  canSpawnUnit() {
+    const spawnX = this.home.x + this.home.width;
+
+    // 앞에 있는 units 중에서 스폰위치와 겹치는지 체크
+    return !this.units.some((unit) => {
+      return unit.x < spawnX + unit.width && unit.x + unit.width > spawnX;
+    });
   }
 }

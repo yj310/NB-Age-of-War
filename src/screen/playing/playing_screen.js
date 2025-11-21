@@ -19,8 +19,11 @@ class PlayingScreen extends GameScreen {
   }
 
   update(screen) {
-    this.playerManager.update(this.enemyManager.enemies);
-    this.enemyManager.update(this.playerManager.units);
+    this.playerManager.update([...this.enemyManager.enemies, ...this.playerManager.units]);
+    this.enemyManager.update([
+      ...this.enemyManager.enemies,
+      ...this.playerManager.units,
+    ]);
 
   }
 
