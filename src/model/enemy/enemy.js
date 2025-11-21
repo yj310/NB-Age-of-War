@@ -49,11 +49,11 @@ class Enemy {
           this.y = prevY;
         }
 
-        // 🔹 공격(hitbox)과 충돌 → HP 감소
-        // if (other.type === "attack") {
-        //   this.hp -= other.damage ?? 1; // damage 없으면 1 기본
-        //   console.log(`Enemy ${this.id} hit! HP: ${this.hp}`);
-        // }
+        // 🔹 다른 ENEMY 충돌 → 이동 멈춤 (추가)
+        if (other.type === EntityType.ENEMY) {
+          this.x = prevX;
+          this.y = prevY;
+        }
       }
     }
   }

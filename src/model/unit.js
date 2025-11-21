@@ -51,6 +51,12 @@ class Unit {
           this.x = prevX;
           this.y = prevY;
         }
+
+        // 🔹 다른 Unit과 충돌 → 이동 멈춤 (추가)
+        if (other.type === EntityType.UNIT) {
+          this.x = prevX;
+          this.y = prevY;
+        }
       }
     }
   }
