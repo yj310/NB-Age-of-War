@@ -136,6 +136,16 @@ class InterfaceManager {
       this.topInterfaceFrame.x + 10,
       this.topInterfaceFrame.y + 10
     );
+    
+    // 적 MP 표시 (오른쪽)
+    textAlign(RIGHT, TOP);
+    text(
+      "적 MP: " + this.enemyManager.mp,
+      this.topInterfaceFrame.x + this.topInterfaceFrame.width - 10,
+      this.topInterfaceFrame.y + 10
+    );
+    
+    textAlign(LEFT, TOP);
     noFill();
 
     this.drawPlayerHp();
@@ -215,16 +225,20 @@ class InterfaceManager {
     const unitWidth = 80;
     const unitHeight = 80;
 
-    this.unitButtons.push(
-      new UnitButton(
-        this.bottomInterfaceFrame.x + margin + (unitWidth + padding) * index,
-        this.bottomInterfaceFrame.y + margin,
-        unitWidth,
-        unitHeight,
-        unit1ImageList[index],
-        () => this.playerManager.addUnit(this.unitTypes[index]),
-        this.unitTypes[index].mpCost
-      )
+    const button = new UnitButton(
+      this.bottomInterfaceFrame.x + margin + (unitWidth + padding) * index,
+      this.bottomInterfaceFrame.y + margin,
+      unitWidth,
+      unitHeight,
+      unit1ImageList[index],
+      () => this.playerManager.addUnit(this.unitTypes[index], index),
+      this.unitTypes[index].mpCost,
+      '#FFFFFF',
+      '#000000',
+      index, // 유닛 타입 인덱스 전달
+      this.playerManager // PlayerManager 참조 전달
     );
+    
+    this.unitButtons.push(button);
   }
 }

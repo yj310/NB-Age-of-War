@@ -51,10 +51,10 @@ class EnemyManager {
   autoSpawnEnemy() {
     if (!this.enemyTypes || this.enemyTypes.length === 0) return;
 
-    // 20프레임마다 한번만 스폰 시도
-    if (tick % 10 === 0) {
-      if (random() < 0.3) {
-        // 30% 확률
+    // 30틱마다 한번만 스폰 시도 (빈도 감소)
+    if (tick % 30 === 0) {
+      if (random() < 0.15) {
+        // 15% 확률 (기존 30%에서 감소)
         const affordable = this.enemyTypes.filter((t) => this.mp >= t.mpCost);
         if (affordable.length === 0) return;
 

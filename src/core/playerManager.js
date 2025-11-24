@@ -47,7 +47,7 @@ class PlayerManager {
     this.unitTypes = unitTypes;
   }
 
-  addUnit(unitType) {
+  addUnit(unitType, unitTypeIndex) {
     if (!(unitType instanceof UnitType)) return;
 
     /// MP 가 부족하면 유닛을 추가하지 않음
@@ -71,10 +71,17 @@ class PlayerManager {
       unitType.attackCooldown,
       unitType.attackRange
     );
+    // 유닛 타입 인덱스 저장 (대기 개수 표시용)
+    unit.unitTypeIndex = unitTypeIndex;
     this.lastUnitId = unitId;
     
     // 바로 스폰하지 않고 대기열에 넣기
     this.spawnQueue.push(unit);
+  }
+  
+  // 특정 유닛 타입의 대기 개수 반환
+  getQueueCount(unitTypeIndex) {
+    return this.spawnQueue.filter(unit => unit.unitTypeIndex === unitTypeIndex).length;
   }
   removeUnit(unit) {
     if (!(unit instanceof Unit)) return;

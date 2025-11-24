@@ -61,9 +61,13 @@ class UnitButton extends ImageButton {
         mpCost,
         color = '#FFFFFF',
         strockColor = '#000000',
+        unitTypeIndex = -1,
+        playerManager = null
     ) {
         super(x, y, width, height, image, onPressed, color, strockColor);
         this.mpCost = mpCost;
+        this.unitTypeIndex = unitTypeIndex;
+        this.playerManager = playerManager;
     }
 
     render() {
@@ -79,7 +83,18 @@ class UnitButton extends ImageButton {
         textAlign(CENTER, TOP);
         textSize(15);
         fill('#000000');
-        text(`Cost: ${this.mpCost}`, this.x + this.width / 2, this.y + this.height + 10);
+        text(`Cost: ${this.mpCost}`, this.x + this.width / 2, this.y + this.height + 5);
+        
+        // 대기 중인 유닛 개수 표시
+        if (this.unitTypeIndex >= 0 && this.playerManager) {
+            const queueCount = this.playerManager.getQueueCount(this.unitTypeIndex);
+            if (queueCount > 0) {
+                fill('#FF6600');
+                textSize(18);
+                text(`대기: ${queueCount}`, this.x + this.width / 2, this.y + this.height + 25);
+            }
+        }
+        
         noFill();
     }
 }
