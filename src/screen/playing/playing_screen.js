@@ -26,15 +26,25 @@ class PlayingScreen extends GameScreen {
     const allEntities = [
       ...this.enemyManager.enemies,
       ...this.playerManager.units,
-      this.enemyManager.enemyHome // 상대편 집 추가
+      this.enemyManager.enemyHome, // 상대편 집 추가
+      this.playerManager.home // 내 집 추가
     ];
 
     this.playerManager.update(allEntities);
     this.enemyManager.update([
       ...this.enemyManager.enemies,
       ...this.playerManager.units,
+      this.playerManager.home // 내 집 추가
     ]);
 
+    // 게임 상태 체크
+    if (this.playerManager.hp <= 0) {
+      // 게임 오버
+      setGameState(GameState.gameOver);
+    } else if (this.enemyManager.hp <= 0) {
+      // 게임 클리어
+      setGameState(GameState.gameClear);
+    }
   }
 
   render(screen) {

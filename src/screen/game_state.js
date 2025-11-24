@@ -5,6 +5,7 @@ let GameState = {
     playing: 3,    // 게임 진행
     paused: 4,     // 일시정지
     gameOver: 5,   // 게임 오버
+    gameClear: 6,  // 게임 클리어
 }
 
 function setGameState(state) {

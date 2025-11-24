@@ -1,6 +1,7 @@
 class PlayerManager {
   constructor() {
     this.home = new Home();
+    this.home.playerManager = this; // Home에 PlayerManager 참조 추가
     this.units = [];
     this.spawnQueue = []; // 대기 유닛
     this.unitTypes = [];

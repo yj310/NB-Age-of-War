@@ -185,6 +185,45 @@ class Enemy {
         }
       }
     }
+    
+    // 3. 집(Home)과 충돌 체크 - 집 앞에 도달했는지
+    for (const other of others) {
+      if (other === this) continue;
+      
+      // Home 클래스인지 확인
+      if (other.constructor && other.constructor.name === 'Home') {
+        // 집의 오른쪽 가장자리
+        const homeRightEdge = other.x + other.width;
+        const distanceToHome = homeRightEdge - this.x;
+        
+        // 집 앞 공격 범위 내에 있으면 멈추고 공격
+        if (distanceToHome <= other.attackRange && distanceToHome >= -this.width) {
+          this.x = prevX;
+          this.y = prevY;
+          
+          // 공격 쿨다운이 끝나면 집 공격
+          if (this.currentAttackCooldown === 0) {
+            this.attackHome(other);
+          }
+        }
+      }
+    }
+  }
+  
+  // 집 공격
+  attackHome(home) {
+    if (!home || !home.playerManager) return;
+    
+    // 집의 HP 감소
+    const damage = Math.min(this.damage, home.playerManager.hp);
+    home.playerManager.hp -= damage;
+    
+    // 공격 쿨다운 설정
+    this.currentAttackCooldown = this.attackCooldown;
+    
+    // 공격 애니메이션 시작
+    this.attackAnimationOffset = 3;
+    this.attackAnimationDirection = -1;
   }
   
   attackTarget(target) {

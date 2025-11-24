@@ -266,6 +266,29 @@ class Unit {
           }
         }
       }
+      
+      // 3. 적 집(EnemyHome)과 충돌 체크 - 집 앞에 도달했는지
+      for (const other of others) {
+        if (other === this) continue;
+        
+        // EnemyHome 클래스인지 확인
+        if (other.constructor && other.constructor.name === 'EnemyHome') {
+          // 집의 왼쪽 가장자리
+          const homeLeftEdge = other.x;
+          const distanceToHome = this.x + this.width - homeLeftEdge;
+          
+          // 집 앞 공격 범위 내에 있으면 멈추고 공격
+          if (distanceToHome <= other.attackRange && distanceToHome >= -this.width) {
+            this.x = prevX;
+            this.y = prevY;
+            
+            // 공격 쿨다운이 끝나면 집 공격
+            if (this.currentAttackCooldown === 0) {
+              this.attackEnemyHome(other);
+            }
+          }
+        }
+      }
     } else {
       // 던져진 상태일 때는 적과 충돌 시 데미지
       for (const other of others) {
@@ -366,6 +389,22 @@ class Unit {
         maxLife: 30
       });
     }
+    
+    // 공격 쿨다운 설정
+    this.currentAttackCooldown = this.attackCooldown;
+    
+    // 공격 애니메이션 시작
+    this.attackAnimationOffset = -3;
+    this.attackAnimationDirection = 1;
+  }
+  
+  // 적 집 공격
+  attackEnemyHome(enemyHome) {
+    if (!enemyHome || !enemyHome.enemyManager) return;
+    
+    // 적 집의 HP 감소
+    const damage = Math.min(this.damage, enemyHome.enemyManager.hp);
+    enemyHome.enemyManager.hp -= damage;
     
     // 공격 쿨다운 설정
     this.currentAttackCooldown = this.attackCooldown;
