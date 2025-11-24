@@ -23,6 +23,10 @@ function setGameState(state) {
         case GameState.gameOver:
             currentScreen = new GameOverScreen();
             break;
+            
+        case GameState.gameClear:
+            currentScreen = new GameClearScreen();
+            break;
     }
 
     if (currentScreen instanceof GameScreen) {
