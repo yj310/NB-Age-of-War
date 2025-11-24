@@ -31,3 +31,23 @@ function mouseMoved() {
         currentScreen.mouseMoved(prevMouseX, prevMouseY, mouseX, mouseY);
     }
 }
+
+/// 마우스 드래그
+function mouseDragged() {
+    mouseXInMainFrame = mouseX - mainFrame.x;
+    mouseYInMainFrame = mouseY - mainFrame.y;
+
+    if (currentScreen instanceof GameScreen) {
+        currentScreen.mouseDragged(mouseXInMainFrame, mouseYInMainFrame);
+    }
+}
+
+/// 마우스 릴리즈
+function mouseReleased() {
+    mouseXInMainFrame = mouseX - mainFrame.x;
+    mouseYInMainFrame = mouseY - mainFrame.y;
+
+    if (currentScreen instanceof GameScreen) {
+        currentScreen.mouseReleased(mouseXInMainFrame, mouseYInMainFrame);
+    }
+}

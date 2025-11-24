@@ -138,6 +138,26 @@ class Enemy {
       }
     }
 
+    // 밀려나는 속도 감쇠 (마찰 효과)
+    this.velocityX *= 0.95;
+    this.velocityY *= 0.95;
+    
+    // 원래 이동 방향으로 복귀 (왼쪽으로 이동)
+    const originalVelocityX = -0.4; // 원래 속도 (EnemyManager에서 설정된 값)
+    if (Math.abs(this.velocityX - originalVelocityX) > 0.1) {
+      // 원래 속도로 점진적으로 복귀
+      this.velocityX += (originalVelocityX - this.velocityX) * 0.1;
+    } else {
+      this.velocityX = originalVelocityX;
+    }
+    
+    // 수직 속도는 0으로 복귀
+    if (Math.abs(this.velocityY) > 0.1) {
+      this.velocityY *= 0.9;
+    } else {
+      this.velocityY = 0;
+    }
+    
     // 1. 이동 먼저 시도
     this.x += this.velocityX;
     this.y += this.velocityY;

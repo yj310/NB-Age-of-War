@@ -94,17 +94,23 @@ class InterfaceManager {
   }
 
   mousePressed(x, y) {
+    let handled = false;
+    
     this.unitButtons.forEach((button) => {
       if (button.contains(x, y)) {
         button.onPressed();
+        handled = true;
       }
     });
 
     this.buttons.forEach((button) => {
       if (button.contains(x, y)) {
         button.onPressed();
+        handled = true;
       }
     });
+    
+    return handled;
   }
 
   /// 상단 인터페이스 프레임

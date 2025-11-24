@@ -50,6 +50,11 @@ let enemyHomeImage = null;
 let prevMouseX = 0;
 let prevMouseY = 0;
 
+/// 메인 프레임 기준 마우스 위치
+/// type: int
+let mouseXInMainFrame = 0;
+let mouseYInMainFrame = 0;
+
 const EntityType = Object.freeze({
   UNIT: "unit",
   ENEMY: "enemy",

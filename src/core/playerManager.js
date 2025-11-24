@@ -11,6 +11,11 @@ class PlayerManager {
     this.maxHp = 100;
     this.Level = 1;
     this.maxLevel = 3;
+    
+    // 새총을 집 지붕 위에 배치
+    const slingshotX = this.home.x + this.home.width / 2;
+    const slingshotY = this.home.y - 10; // 지붕 위
+    this.slingshot = new Slingshot(slingshotX, slingshotY);
   }
 
   update(others) {
@@ -28,7 +33,13 @@ class PlayerManager {
 
   render() {
     this.home.render();
-    this.units.forEach((unit) => unit.render());
+    this.slingshot.render();
+    // 새총에 장전되지 않은 유닛만 렌더링
+    this.units.forEach((unit) => {
+      if (this.slingshot.loadedUnit !== unit) {
+        unit.render();
+      }
+    });
   }
 
   setUnitTypes(unitTypes) {

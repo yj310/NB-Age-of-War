@@ -12,6 +12,9 @@ class PlayingScreen extends GameScreen {
 
     /// type: Button[]
     this.unitButtons = [];
+
+    // 드래그 중인 유닛
+    this.draggedUnit = null;
   }
 
   onEnter() {
@@ -19,7 +22,14 @@ class PlayingScreen extends GameScreen {
   }
 
   update(screen) {
-    this.playerManager.update([...this.enemyManager.enemies, ...this.playerManager.units]);
+    // 새총 발사된 유닛이 상대편 집과 충돌하는지 체크하기 위해 enemyHome 추가
+    const allEntities = [
+      ...this.enemyManager.enemies,
+      ...this.playerManager.units,
+      this.enemyManager.enemyHome // 상대편 집 추가
+    ];
+
+    this.playerManager.update(allEntities);
     this.enemyManager.update([
       ...this.enemyManager.enemies,
       ...this.playerManager.units,
@@ -46,7 +56,54 @@ class PlayingScreen extends GameScreen {
   }
 
   mousePressed(x, y) {
-    this.interfaceManager.mousePressed(x, y);
+    // 인터페이스 버튼 클릭 체크 먼저
+    if (this.interfaceManager.mousePressed(x, y)) {
+      return;
+    }
+
+    // 유닛 드래그 시작 체크
+    for (let i = this.playerManager.units.length - 1; i >= 0; i--) {
+      const unit = this.playerManager.units[i];
+      if (unit.isPointInside(x, y) && !unit.isDragged && !unit.isThrown) {
+        unit.startDrag(x, y);
+        this.draggedUnit = unit;
+        break;
+      }
+    }
+  }
+
+  mouseDragged(x, y) {
+    // 드래그 중인 유닛 위치 업데이트
+    if (this.draggedUnit && this.draggedUnit.isDragged) {
+      this.draggedUnit.updateDrag(x, y);
+
+      // 새총에 장전되어 있으면 조준 업데이트
+      if (this.playerManager.slingshot.loadedUnit === this.draggedUnit) {
+        this.playerManager.slingshot.updateAim(x, y);
+      } else {
+        // 새총 범위 내에 들어가면 장전
+        if (this.playerManager.slingshot.isUnitInRange(this.draggedUnit)) {
+          this.playerManager.slingshot.loadUnit(this.draggedUnit);
+        }
+      }
+    }
+  }
+
+  mouseReleased(x, y) {
+    // 새총에 장전되어 있으면 발사
+    if (this.draggedUnit && this.playerManager.slingshot.loadedUnit === this.draggedUnit) {
+      const firedUnit = this.playerManager.slingshot.fire(x, y);
+      if (firedUnit) {
+        // 발사된 유닛은 목표 지점 설정
+        firedUnit.slingshotTargetX = x;
+        firedUnit.slingshotTargetY = y;
+      }
+      this.draggedUnit = null;
+    } else if (this.draggedUnit && this.draggedUnit.isDragged) {
+      // 일반 던지기
+      this.draggedUnit.endDrag(x, y);
+      this.draggedUnit = null;
+    }
   }
 
   setFirstStage() {

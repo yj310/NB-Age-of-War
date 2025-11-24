@@ -1,6 +1,8 @@
 class EnemyManager {
   constructor() {
     this.enemyHome = new EnemyHome();
+    // enemyHome에 enemyManager 참조 추가 (폭발 데미지용)
+    this.enemyHome.enemyManager = this;
     this.enemies = [];
     this.spawnQueue = []; // 대기 중인 적들
 

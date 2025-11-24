@@ -23,4 +23,10 @@ class GameScreen {
 
     // 마우스 이동 처리
     mouseMoved(prevMouseX, prevMouseY, currentMouseX, currentMouseY) { }
+
+    // 마우스 드래그 처리
+    mouseDragged(mouseX, mouseY) { }
+
+    // 마우스 릴리즈 처리
+    mouseReleased(mouseX, mouseY) { }
 }
