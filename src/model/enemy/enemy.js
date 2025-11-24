@@ -25,6 +25,9 @@ class Enemy {
     // 공격 애니메이션 적용된 위치
     const renderX = this.x + this.attackAnimationOffset;
     
+    // 빨간색 아우라 렌더링 (뒤에 그리기)
+    this.renderRedAura(renderX);
+    
     if (this.image) {
       image(this.image, renderX, this.y, this.width, this.height);
     } else {
@@ -36,6 +39,26 @@ class Enemy {
     
     // 데미지 숫자 렌더링
     this.renderDamageNumbers(renderX);
+  }
+  
+  renderRedAura(renderX) {
+    // 부드러운 빨간색 아우라 효과를 위해 여러 개의 반투명 원형 그리기
+    const centerX = renderX + this.width / 2;
+    const centerY = this.y + this.height / 2;
+    const maxRadius = Math.max(this.width, this.height) / 2 + 8; // 아우라 크기
+    const layers = 8; // 레이어 개수 (많을수록 부드러움)
+    
+    // 여러 개의 반투명 빨간색 원형을 겹쳐서 부드러운 글로우 효과 생성
+    for (let i = layers; i > 0; i--) {
+      const radius = maxRadius * (i / layers);
+      const alpha = 30 / i; // 안쪽일수록 더 진함
+      
+      fill(255, 0, 0, alpha);
+      noStroke();
+      ellipse(centerX, centerY, radius * 2, radius * 2);
+    }
+    
+    noFill();
   }
   
   renderHpBar(renderX) {
