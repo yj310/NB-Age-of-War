@@ -2,11 +2,11 @@ let tick = 0;
 let lastTickTime = 0;
 let tickInterval = 100; // 100ms = 0.1초마다 한 틱 (1초에 10틱)
 let TICK_INTERVAL = {
-    normal: 100,
-    fast_2_times: 50,
-    fast_4_times: 10,
-    fast_8_times: 5,
-    pause: null,
+  normal: 100,
+  fast_2_times: 50,
+  fast_4_times: 10,
+  fast_8_times: 5,
+  pause: null,
 }
 
 
@@ -52,5 +52,6 @@ let prevMouseY = 0;
 
 const EntityType = Object.freeze({
   UNIT: "unit",
+  ENEMY: "enemy",
   ATTACK: "attack",
 });

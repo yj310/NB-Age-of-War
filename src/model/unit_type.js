@@ -6,7 +6,10 @@ class UnitType {
         height,
         velocityX,
         velocityY,
-        hp
+        hp,
+        damage = 10,
+        attackCooldown = 30,
+        attackRange = 5
     ) {
         this.image = image;
         this.mpCost = mpCost;
@@ -15,5 +18,8 @@ class UnitType {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.hp = hp;
+        this.damage = damage;
+        this.attackCooldown = attackCooldown;
+        this.attackRange = attackRange;
     }
 }

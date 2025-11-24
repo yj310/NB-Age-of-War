@@ -19,6 +19,9 @@ class PlayerManager {
     }
     this.units.forEach((unit) => unit.update(others));
 
+    // 죽은 유닛 제거
+    this.units = this.units.filter((unit) => unit.isAlive());
+
     // 유닛 스폰 체크
     this.trySpawnUnitsFromQueue();
   }
@@ -51,7 +54,10 @@ class PlayerManager {
       unitType.velocityX,
       unitType.velocityY,
       unitType.hp,
-      EntityType.UNIT
+      EntityType.UNIT,
+      unitType.damage,
+      unitType.attackCooldown,
+      unitType.attackRange
     );
     this.lastUnitId = unitId;
     

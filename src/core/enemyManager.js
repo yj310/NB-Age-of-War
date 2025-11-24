@@ -26,6 +26,9 @@ class EnemyManager {
     // 적 유닛 이동/공격 업데이트
     this.enemies.forEach((enemy) => enemy.update(others));
 
+    // 죽은 적 제거
+    this.enemies = this.enemies.filter((enemy) => enemy.isAlive());
+
     // 대기열에서 스폰 가능한지 체크
     this.trySpawnEnemiesFromQueue();
 
@@ -80,7 +83,10 @@ class EnemyManager {
       -enemyType.velocityX,
       enemyType.velocityY,
       enemyType.hp,
-      EntityType.ENEMY
+      EntityType.ENEMY,
+      enemyType.damage,
+      enemyType.attackCooldown,
+      enemyType.attackRange
     );
 
     // 바로 스폰하지 말고 대기열에 넣음

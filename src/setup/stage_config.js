@@ -3,11 +3,11 @@ function createStageUnitConfig(stage, imageList) {
   switch (stage) {
     case 1:
       return [
-        new UnitType(imageList[0], 10, 30, 30, 0.4, 0, 50),
-        new UnitType(imageList[1], 15, 30, 30, 0.4, 0, 60),
-        new UnitType(imageList[2], 20, 30, 30, 0.4, 0, 70),
-        new UnitType(imageList[3], 30, 30, 30, 0.4, 0, 80),
-        new UnitType(imageList[4], 50, 30, 30, 0.4, 0, 100),
+        new UnitType(imageList[0], 10, 30, 30, 0.4, 0, 50, 10, 30, 5),
+        new UnitType(imageList[1], 15, 30, 30, 0.4, 0, 60, 12, 30, 5),
+        new UnitType(imageList[2], 20, 30, 30, 0.4, 0, 70, 15, 30, 5),
+        new UnitType(imageList[3], 30, 30, 30, 0.4, 0, 80, 18, 30, 5),
+        new UnitType(imageList[4], 50, 30, 30, 0.4, 0, 100, 25, 30, 5),
       ];
 
     default:
