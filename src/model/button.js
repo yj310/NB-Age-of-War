@@ -71,30 +71,58 @@ class UnitButton extends ImageButton {
     }
 
     render() {
+        // Card Background
         fill(this.color);
         stroke(this.strockColor);
-        rect(this.x, this.y, this.width, this.height);
+        strokeWeight(2);
+        rect(this.x, this.y, this.width, this.height, 10); // Rounded corners
+
+        // Unit Image
         if (this.image) {
-            image(this.image, this.x, this.y, this.width, this.height);
+            const imgSize = this.width - 20;
+            image(this.image, this.x + 10, this.y + 10, imgSize, imgSize);
         }
 
+        // Cost Area
+        const costHeight = 25;
+        fill('#FFD700'); // Gold background for cost
         noStroke();
+        rect(this.x, this.y + this.height - costHeight, this.width, costHeight, 0, 0, 10, 10); // Bottom rounded corners
 
-        textAlign(CENTER, TOP);
-        textSize(15);
+        // Cost Text & Icon
         fill('#000000');
-        text(`Cost: ${this.mpCost}`, this.x + this.width / 2, this.y + this.height + 5);
-        
-        // 대기 중인 유닛 개수 표시
+        textAlign(CENTER, CENTER);
+        textSize(14);
+        textStyle(BOLD);
+
+        // Simple Coin Icon (Circle)
+        fill('#FFA500');
+        circle(this.x + 20, this.y + this.height - costHeight / 2, 12);
+
+        fill('#000000');
+        text(this.mpCost, this.x + this.width / 2 + 10, this.y + this.height - costHeight / 2);
+
+        // 대기 중인 유닛 개수 표시 (Badge style)
         if (this.unitTypeIndex >= 0 && this.playerManager) {
             const queueCount = this.playerManager.getQueueCount(this.unitTypeIndex);
             if (queueCount > 0) {
-                fill('#FF6600');
-                textSize(18);
-                text(`대기: ${queueCount}`, this.x + this.width / 2, this.y + this.height + 25);
+                // Badge background
+                fill('#FF4444');
+                stroke('#FFFFFF');
+                strokeWeight(2);
+                circle(this.x + this.width - 10, this.y + 10, 24);
+
+                // Count text
+                fill('#FFFFFF');
+                noStroke();
+                textSize(14);
+                textAlign(CENTER, CENTER);
+                text(queueCount, this.x + this.width - 10, this.y + 10);
             }
         }
-        
+
+        // Reset styles
+        noStroke();
         noFill();
     }
 }

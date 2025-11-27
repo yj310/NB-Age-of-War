@@ -12,6 +12,8 @@ class PlayerManager {
     this.maxHp = 100;
     this.Level = 1;
     this.maxLevel = 3;
+    this.xp = 0;
+    this.maxXp = 100;
     
     // 새총을 집 지붕 위에 배치
     const slingshotX = this.home.x + this.home.width / 2;
