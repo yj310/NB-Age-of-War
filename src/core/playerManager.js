@@ -57,7 +57,10 @@ class PlayerManager {
     this.mp -= unitType.mpCost;
 
     const unitId = this.lastUnitId + 1;
-    const unit = new Unit(
+
+    // name에 따라 다른 유닛 클래스 생성
+    let unit;
+    const unitParams = [
       unitId,
       unitType.image,
       1,
@@ -71,12 +74,27 @@ class PlayerManager {
       EntityType.UNIT,
       unitType.damage,
       unitType.attackCooldown,
-      unitType.attackRange
-    );
+      unitType.attackRange,
+      unitType.spriteSheet,
+    ];
+
+    switch (unitType.name) {
+      case "Kerby":
+        unit = new Kerby(...unitParams);
+        break;
+      case "WaddleDee":
+        unit = new WaddleDee(...unitParams);
+        break;
+      case "Unit":
+      default:
+        unit = new Unit(...unitParams);
+        break;
+    }
+
     // 유닛 타입 인덱스 저장 (대기 개수 표시용)
     unit.unitTypeIndex = unitTypeIndex;
     this.lastUnitId = unitId;
-    
+
     // 바로 스폰하지 않고 대기열에 넣기
     this.spawnQueue.push(unit);
   }

@@ -354,11 +354,11 @@ class InterfaceManager {
       this.bottomInterfaceFrame.y + margin + 10, // Add some top margin inside panel
       unitWidth,
       unitHeight,
-      unit1ImageList[index],
+      unit1SpriteImageList[index],
       () => this.playerManager.addUnit(this.unitTypes[index], index),
       this.unitTypes[index].mpCost,
-      '#FFFFFF',
-      '#000000',
+      "#FFFFFF",
+      "#000000",
       index, // 유닛 타입 인덱스 전달
       this.playerManager // PlayerManager 참조 전달
     );

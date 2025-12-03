@@ -23,12 +23,12 @@ function initialData() {
     setGameState(gameState);
 
     // 이미지 로드
-    unit1ImageList = [
-        loadImage('assets/images/unit_1_1.png'),
-        loadImage('assets/images/unit_1_2.png'),
-        loadImage('assets/images/unit_1_3.png'),
-        loadImage('assets/images/unit_1_4.png'),
-        loadImage('assets/images/unit_1_5.png'),
+    unit1SpriteImageList = [
+      loadImage("assets/unit/unit_1.png"),
+      loadImage("assets/unit/unit_2.png"),
+      loadImage("assets/unit/unit_3.png"),
+      loadImage("assets/unit/unit_4.png"),
+      loadImage("assets/unit/unit_5.png"),
     ];
     assetList = {
         "pause": loadImage('assets/images/pause.png'),

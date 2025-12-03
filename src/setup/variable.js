@@ -29,7 +29,7 @@ let currentScreen = null;
 
 /// 이미지 
 /// type: Image[]
-let unit1ImageList = null;
+let unit1SpriteImageList = null;
 
 /// 아이콘 에셋
 /// type: Image[]

@@ -1,5 +1,6 @@
 class UnitType {
     constructor(
+        name,
         image,
         mpCost,
         width,
@@ -9,8 +10,11 @@ class UnitType {
         hp,
         damage = 10,
         attackCooldown = 30,
-        attackRange = 5
+        attackRange = 5,
+        spriteSheet = null,
+        animations = null
     ) {
+        this.name = name;
         this.image = image;
         this.mpCost = mpCost;
         this.width = width;
@@ -21,5 +25,7 @@ class UnitType {
         this.damage = damage;
         this.attackCooldown = attackCooldown;
         this.attackRange = attackRange;
+        this.spriteSheet = spriteSheet;
+        this.animations = animations;
     }
 }

@@ -13,7 +13,9 @@ class Unit {
     type,
     damage = 10,
     attackCooldown = 30,
-    attackRange = 5
+    attackRange = 5,
+    spriteSheet = null,
+    animations = null
   ) {
     this.id = id;
     this.image = image;
@@ -34,6 +36,13 @@ class Unit {
     this.attackAnimationOffset = 0;
     this.attackAnimationDirection = 1;
     this.damageNumbers = [];
+
+    // 스프라이트 애니메이션 관련 속성
+    this.spriteSheet = spriteSheet;
+    this.animations = animations
+    this.currentAnimation = "idle";
+    this.currentFrame = 0;
+    this.frameCounter = 0;
     
     // 드래그/던지기 관련 속성
     this.isDragged = false;
@@ -59,11 +68,11 @@ class Unit {
     // 드래그 중이면 마우스 위치로 이동
     let renderX = this.x;
     let renderY = this.y;
-    
+
     if (this.isDragged) {
       renderX = this.dragOffsetX - this.width / 2;
       renderY = this.dragOffsetY - this.height / 2;
-      
+
       // 드래그 중 시각적 피드백 (반투명 + 테두리)
       tint(255, 200);
       stroke(0, 150, 255);
@@ -72,22 +81,42 @@ class Unit {
       // 공격 애니메이션 적용
       renderX += this.attackAnimationOffset;
     }
-    
-    if (this.image) {
+
+    // 스프라이트 시트가 있으면 애니메이션 프레임을 그림
+    if (this.spriteSheet && this.animations && this.animations[this.currentAnimation]) {
+      const anim = this.animations[this.currentAnimation];
+      const spacing = anim.spacing || 0;
+      const sx = anim.startX + (this.currentFrame * (anim.frameWidth + spacing));
+      const sy = anim.startY;
+
+
+      image(
+        this.spriteSheet,
+        renderX,
+        renderY,
+        this.width,
+        this.height,
+        sx,
+        sy,
+        anim.frameWidth,
+        anim.frameHeight
+      );
+    } else if (this.image) {
+      // 스프라이트 시트가 없으면 기본 이미지 사용
       image(this.image, renderX, renderY, this.width, this.height);
     } else {
       rect(renderX, renderY, this.width, this.height);
     }
-    
+
     // 드래그 중이면 효과 리셋
     if (this.isDragged) {
       noTint();
       noStroke();
     }
-    
+
     // HP 바 렌더링
     this.renderHpBar(renderX);
-    
+
     // 데미지 숫자 렌더링
     this.renderDamageNumbers(renderX);
   }
@@ -121,16 +150,16 @@ class Unit {
     const barHeight = 4;
     const barX = renderX;
     const barY = this.y - 8;
-    
+
     // 배경 (빨간색)
     fill(200, 0, 0);
     rect(barX, barY, barWidth, barHeight);
-    
+
     // 현재 HP (초록색)
     const hpRatio = this.hp / this.maxHp;
     fill(0, 200, 0);
     rect(barX, barY, barWidth * hpRatio, barHeight);
-    
+
     // 테두리
     noFill();
     stroke(0);
@@ -139,12 +168,40 @@ class Unit {
     noStroke();
   }
 
+  // 애니메이션 프레임 업데이트
+  updateAnimation() {
+    if (!this.spriteSheet) return;
+
+    const anim = this.animations[this.currentAnimation];
+    this.frameCounter++;
+
+    // speed 값에 따라 프레임 변경 속도 조절
+    if (this.frameCounter >= anim.speed) {
+      this.frameCounter = 0;
+      this.currentFrame = (this.currentFrame + 1) % anim.frameCount;
+    }
+  }
+
+  // 애니메이션 변경
+  setAnimation(animName) {
+    if (!this.spriteSheet) return;
+
+    if (this.currentAnimation !== animName && this.animations[animName]) {
+      this.currentAnimation = animName;
+      this.currentFrame = 0;
+      this.frameCounter = 0;
+    }
+  }
+
   update(others = []) {
     // 드래그 중이면 업데이트 스킵
     if (this.isDragged) {
       return;
     }
-    
+
+    // 애니메이션 프레임 업데이트
+    this.updateAnimation();
+
     const prevX = this.x;
     const prevY = this.y;
 
@@ -224,7 +281,7 @@ class Unit {
       if (this.currentAttackCooldown > 0) {
         this.currentAttackCooldown--;
       }
-      
+
       // 공격 애니메이션 업데이트
       if (this.attackAnimationOffset !== 0) {
         this.attackAnimationOffset += this.attackAnimationDirection * 2;
@@ -235,6 +292,18 @@ class Unit {
           this.attackAnimationOffset = 0;
           this.attackAnimationDirection = 1;
         }
+      }
+
+      // 애니메이션 상태 변경
+      if (this.currentAttackCooldown > this.attackCooldown * 0.6) {
+        // 공격 중이면 attack 애니메이션
+        this.setAnimation("idle");
+      } else if (Math.abs(this.velocityX) > 0.1 || Math.abs(this.velocityY) > 0.1) {
+        // 이동 중이면 walk 애니메이션
+        this.setAnimation("walk");
+      } else {
+        // 정지 상태면 idle 애니메이션
+        this.setAnimation('idle');
       }
 
       // 1. 이동 먼저 시도

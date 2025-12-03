@@ -117,7 +117,7 @@ class PlayingScreen extends GameScreen {
   }
 
   setFirstStage() {
-    this.unitTypes = createStageUnitConfig(1, unit1ImageList);
+    this.unitTypes = createStageUnitConfig(1, [], unit1SpriteImageList);
     this.playerManager.setUnitTypes(this.unitTypes);
     this.interfaceManager.setUnitTypes(this.unitTypes);
     this.enemyManager.setEnemyTypes(this.unitTypes);
