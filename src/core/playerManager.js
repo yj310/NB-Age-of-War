@@ -76,6 +76,7 @@ class PlayerManager {
       unitType.attackCooldown,
       unitType.attackRange,
       unitType.spriteSheet,
+      unitType.animations,
     ];
 
     switch (unitType.name) {

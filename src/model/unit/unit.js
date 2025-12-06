@@ -170,7 +170,7 @@ class Unit {
 
   // 애니메이션 프레임 업데이트
   updateAnimation() {
-    if (!this.spriteSheet) return;
+    if (!this.spriteSheet || !this.animations) return;
 
     const anim = this.animations[this.currentAnimation];
     this.frameCounter++;
@@ -184,7 +184,7 @@ class Unit {
 
   // 애니메이션 변경
   setAnimation(animName) {
-    if (!this.spriteSheet) return;
+    if (!this.spriteSheet || !this.animations) return;
 
     if (this.currentAnimation !== animName && this.animations[animName]) {
       this.currentAnimation = animName;

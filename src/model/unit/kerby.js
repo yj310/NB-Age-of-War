@@ -15,7 +15,7 @@ class Kerby extends Unit {
     attackCooldown = 30,
     attackRange = 5,
     spriteSheet = null,
-    
+    animations = null
   ) {
     // 부모 클래스 생성자 호출
     super(

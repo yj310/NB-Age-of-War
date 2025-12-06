@@ -1,5 +1,5 @@
 class Enemy {
-  constructor(id, image, level, x, y, width, height, velocityX, velocityY, hp, type, damage = 10, attackCooldown = 30, attackRange = 5) {
+  constructor(id, image, level, x, y, width, height, velocityX, velocityY, hp, type, damage = 10, attackCooldown = 30, attackRange = 5, spriteSheet = null, animations = null) {
     this.id = id;
     this.image = image;
     this.level = level;
@@ -19,24 +19,54 @@ class Enemy {
     this.attackAnimationOffset = 0;
     this.attackAnimationDirection = 1;
     this.damageNumbers = [];
+    this.spriteSheet = spriteSheet;
+    this.animations = animations;
+    this.currentAnimation = "idle";
+    this.currentFrame = 0;
+    this.frameCounter = 0;
   }
 
   render() {
     // 공격 애니메이션 적용된 위치
     const renderX = this.x + this.attackAnimationOffset;
-    
+
     // 빨간색 아우라 렌더링 (뒤에 그리기)
     this.renderRedAura(renderX);
-    
-    if (this.image) {
-      image(this.image, renderX, this.y, this.width, this.height);
+
+    // 이미지 좌우 반전
+    push();
+    translate(renderX + this.width, this.y);
+    scale(-1, 1);
+
+    // 스프라이트 시트가 있으면 애니메이션 프레임을 그림
+    if (this.spriteSheet && this.animations && this.animations[this.currentAnimation]) {
+      const anim = this.animations[this.currentAnimation];
+      const spacing = anim.spacing || 0;
+      const sx = anim.startX + (this.currentFrame * (anim.frameWidth + spacing));
+      const sy = anim.startY;
+
+      image(
+        this.spriteSheet,
+        0,
+        0,
+        this.width,
+        this.height,
+        sx,
+        sy,
+        anim.frameWidth,
+        anim.frameHeight
+      );
+    } else if (this.image) {
+      image(this.image, 0, 0, this.width, this.height);
     } else {
-      rect(renderX, this.y, this.width, this.height);
+      rect(0, 0, this.width, this.height);
     }
-    
+
+    pop();
+
     // HP 바 렌더링
     this.renderHpBar(renderX);
-    
+
     // 데미지 숫자 렌더링
     this.renderDamageNumbers(renderX);
   }
@@ -108,6 +138,33 @@ class Enemy {
     }
   }
 
+  // 애니메이션 프레임 업데이트
+  updateAnimation() {
+    if (!this.spriteSheet || !this.animations) return;
+
+    const anim = this.animations[this.currentAnimation];
+    if (!anim) return;
+
+    this.frameCounter++;
+
+    // speed 값에 따라 프레임 변경 속도 조절
+    if (this.frameCounter >= anim.speed) {
+      this.frameCounter = 0;
+      this.currentFrame = (this.currentFrame + 1) % anim.frameCount;
+    }
+  }
+
+  // 애니메이션 변경
+  setAnimation(animName) {
+    if (!this.spriteSheet || !this.animations) return;
+
+    if (this.currentAnimation !== animName && this.animations[animName]) {
+      this.currentAnimation = animName;
+      this.currentFrame = 0;
+      this.frameCounter = 0;
+    }
+  }
+
   isColliding(other) {
     return (
       this.x < other.x + other.width &&
@@ -118,6 +175,9 @@ class Enemy {
   }
 
   update(others = []) {
+    // 애니메이션 프레임 업데이트
+    this.updateAnimation();
+
     const prevX = this.x;
     const prevY = this.y;
 
@@ -125,7 +185,7 @@ class Enemy {
     if (this.currentAttackCooldown > 0) {
       this.currentAttackCooldown--;
     }
-    
+
     // 공격 애니메이션 업데이트
     if (this.attackAnimationOffset !== 0) {
       this.attackAnimationOffset += this.attackAnimationDirection * 2;
@@ -136,6 +196,18 @@ class Enemy {
         this.attackAnimationOffset = 0;
         this.attackAnimationDirection = 1;
       }
+    }
+
+    // 애니메이션 상태 변경
+    if (this.currentAttackCooldown > this.attackCooldown * 0.6) {
+      // 공격 중이면 attack 애니메이션
+      this.setAnimation('idle');
+    } else if (Math.abs(this.velocityX) > 0.1 || Math.abs(this.velocityY) > 0.1) {
+      // 이동 중이면 walk 애니메이션
+      this.setAnimation('walk');
+    } else {
+      // 정지 상태면 idle 애니메이션
+      this.setAnimation('idle');
     }
 
     // 밀려나는 속도 감쇠 (마찰 효과)

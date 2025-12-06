@@ -1,4 +1,4 @@
-class Boo extends Unit {
+class EnemyBoo extends Enemy {
   constructor(
     id,
     image,
@@ -34,13 +34,13 @@ class Boo extends Unit {
       attackCooldown,
       attackRange,
       spriteSheet,
-      animations
+      animations 
     );
 
-    // Boo만의 고유 속성 추가
-    this.isBoo = true;
+    // EnemyBoo만의 고유 속성 추가
+    this.isEnemyBoo = true;
   }
 
-  // Boo만의 고유 메서드를 여기에 추가할 수 있습니다
+  // EnemyBoo만의 고유 메서드를 여기에 추가할 수 있습니다
   // 예: 특별한 공격, 스킬 등
 }

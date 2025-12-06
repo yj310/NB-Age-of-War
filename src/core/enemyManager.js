@@ -74,7 +74,9 @@ class EnemyManager {
 
     const enemyId = ++this.lastEnemyId;
 
-    const enemy = new Enemy(
+    // name에 따라 다른 적 클래스 생성
+    let enemy;
+    const enemyParams = [
       enemyId,
       enemyType.image,
       -1, // 왼쪽 이동
@@ -88,8 +90,32 @@ class EnemyManager {
       EntityType.ENEMY,
       enemyType.damage,
       enemyType.attackCooldown,
-      enemyType.attackRange
-    );
+      enemyType.attackRange,
+      enemyType.spriteSheet,
+      enemyType.animations
+    ];
+
+    switch (enemyType.name) {
+      case "Kerby":
+        enemy = new EnemyKerby(...enemyParams);
+        break;
+      case "WaddleDee":
+        enemy = new EnemyWaddleDee(...enemyParams);
+        break;
+      case "Zelda":
+        enemy = new EnemyZelda(...enemyParams);
+        break;
+      case "Mario":
+        enemy = new EnemyMario(...enemyParams);
+        break;
+      case "Boo":
+        enemy = new EnemyBoo(...enemyParams);
+        break;
+      case "Enemy":
+      default:
+        enemy = new Enemy(...enemyParams);
+        break;
+    }
 
     // 바로 스폰하지 말고 대기열에 넣음
     this.spawnQueue.push(enemy);

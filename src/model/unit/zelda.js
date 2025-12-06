@@ -34,35 +34,7 @@ class Zelda extends Unit {
       attackCooldown,
       attackRange,
       spriteSheet,
-      (animations = {
-        idle: {
-          frameCount: 2,
-          frameWidth: 60,
-          frameHeight: 103,
-          startX: 0,
-          startY: 0,
-          speed: 10,
-          scale: 1.0,
-        },
-        walk: {
-          frameCount: 3,
-          frameWidth: 80,
-          frameHeight: 103,
-          startX: 0,
-          startY: 112,
-          speed: 5,
-          scale: 0.3,
-        },
-        attack: {
-          frameCount: 2,
-          frameWidth: 60,
-          frameHeight: 103,
-          startX: 0,
-          startY: 64,
-          speed: 3,
-          scale: 1.0,
-        },
-      })
+      animations
     );
 
     // Zelda만의 고유 속성 추가

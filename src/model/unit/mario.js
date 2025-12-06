@@ -34,34 +34,7 @@ class Mario extends Unit {
       attackCooldown,
       attackRange,
       spriteSheet,
-      (animations = {
-        idle: {
-          frameCount: 2,
-          frameWidth: 80,
-          frameHeight: 105,
-          startX: 0,
-          startY: 0,
-          speed: 10,
-          scale: 1.0,
-        },
-        walk: {
-          frameCount: 4,
-          frameWidth: 80,
-          frameHeight: 105,
-          startX: 0,
-          startY: 105,
-          speed: 5,
-        },
-        attack: {
-          frameCount: 2,
-          frameWidth: 32,
-          frameHeight: 32,
-          startX: 0,
-          startY: 64,
-          speed: 3,
-          scale: 1.0,
-        },
-      })
+      animations
     );
 
     // Mario만의 고유 속성 추가

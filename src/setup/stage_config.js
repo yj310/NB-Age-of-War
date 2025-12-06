@@ -16,7 +16,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           30,
           5,
           spriteSheetList[0],
-          (animations = {
+          {
             // 유닛 0번 애니메이션
             idle: {
               frameCount: 2,
@@ -46,7 +46,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               speed: 3,
               scale: 1.0,
             },
-          })
+          }
         ),
         new UnitType(
           "WaddleDee",
@@ -60,7 +60,38 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           12,
           30,
           5,
-          spriteSheetList[1]
+          spriteSheetList[1],
+          {
+            // 유닛 1번 애니메이션
+            idle: {
+              frameCount: 2,
+              frameWidth: 75,
+              frameHeight: 65,
+              startX: 0,
+              startY: 0,
+              speed: 10,
+              scale: 1.0,
+            },
+            walk: {
+              frameCount: 5,
+              frameWidth: 91,
+              frameHeight: 75,
+              startX: 0,
+              startY: 140,
+              speed: 5,
+              scale: 0.3,
+              spacing: 15,
+            },
+            attack: {
+              frameCount: 2,
+              frameWidth: 45,
+              frameHeight: 35,
+              startX: 0,
+              startY: 70,
+              speed: 3,
+              scale: 1.0,
+            },
+          }
         ),
         new UnitType(
           "Zelda",
@@ -74,7 +105,36 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           15,
           30,
           5,
-          spriteSheetList[2]
+          spriteSheetList[2],
+          {
+            idle: {
+              frameCount: 2,
+              frameWidth: 60,
+              frameHeight: 103,
+              startX: 0,
+              startY: 0,
+              speed: 10,
+              scale: 1.0,
+            },
+            walk: {
+              frameCount: 3,
+              frameWidth: 80,
+              frameHeight: 103,
+              startX: 0,
+              startY: 112,
+              speed: 5,
+              scale: 0.3,
+            },
+            attack: {
+              frameCount: 2,
+              frameWidth: 60,
+              frameHeight: 103,
+              startX: 0,
+              startY: 64,
+              speed: 3,
+              scale: 1.0,
+            },
+          }
         ),
         new UnitType(
           "Mario",
@@ -88,7 +148,35 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           18,
           30,
           5,
-          spriteSheetList[3]
+          spriteSheetList[3],
+          {
+            idle: {
+              frameCount: 2,
+              frameWidth: 80,
+              frameHeight: 105,
+              startX: 0,
+              startY: 0,
+              speed: 10,
+              scale: 1.0,
+            },
+            walk: {
+              frameCount: 4,
+              frameWidth: 80,
+              frameHeight: 105,
+              startX: 0,
+              startY: 105,
+              speed: 5,
+            },
+            attack: {
+              frameCount: 2,
+              frameWidth: 32,
+              frameHeight: 32,
+              startX: 0,
+              startY: 64,
+              speed: 3,
+              scale: 1.0,
+            },
+          }
         ),
         new UnitType(
           "Boo",
@@ -102,7 +190,38 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           25,
           30,
           5,
-          spriteSheetList[4]
+          spriteSheetList[4],
+          {
+            idle: {
+              frameCount: 2,
+              frameWidth: 70,
+              frameHeight: 75,
+              startX: 110,
+              startY: 140,
+              speed: 10,
+              scale: 1.0,
+              spacing: 30,
+            },
+            walk: {
+              frameCount: 3,
+              frameWidth: 70,
+              frameHeight: 75,
+              startX: 730,
+              startY: 140,
+              speed: 5,
+              scale: 1.0,
+              spacing: 30,
+            },
+            attack: {
+              frameCount: 2,
+              frameWidth: 32,
+              frameHeight: 32,
+              startX: 0,
+              startY: 64,
+              speed: 3,
+              scale: 1.0,
+            },
+          }
         ),
       ];
 

@@ -34,37 +34,7 @@ class WaddleDee extends Unit {
       attackCooldown,
       attackRange,
       spriteSheet,
-      (animations = {
-        // 유닛 1번 애니메이션
-        idle: {
-          frameCount: 2,
-          frameWidth: 75,
-          frameHeight: 65,
-          startX: 0,
-          startY: 0,
-          speed: 10,
-          scale: 1.0,
-        },
-        walk: {
-          frameCount: 5,
-          frameWidth: 91,
-          frameHeight: 75,
-          startX: 0,
-          startY: 140,
-          speed: 5,
-          scale: 0.3,
-          spacing: 15,
-        },
-        attack: {
-          frameCount: 2,
-          frameWidth: 45,
-          frameHeight: 35,
-          startX: 0,
-          startY: 70,
-          speed: 3,
-          scale: 1.0,
-        },
-      })
+      animations 
     );
 
     // WaddleDee만의 고유 속성 추가
