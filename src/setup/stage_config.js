@@ -32,7 +32,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           spriteSheetList[1]
         ),
         new UnitType(
-          "Unit",
+          "Zelda",
           imageList[2],
           20,
           32,
@@ -46,7 +46,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           spriteSheetList[2]
         ),
         new UnitType(
-          "Unit",
+          "Mario",
           imageList[3],
           30,
           32,
@@ -60,7 +60,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           spriteSheetList[3]
         ),
         new UnitType(
-          "Unit",
+          "Boo",
           imageList[4],
           50,
           32,

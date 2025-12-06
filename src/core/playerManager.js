@@ -85,7 +85,15 @@ class PlayerManager {
       case "WaddleDee":
         unit = new WaddleDee(...unitParams);
         break;
-      case "Unit":
+      case "Zelda":
+        unit = new Zelda(...unitParams);
+        break;
+      case "Mario":
+        unit = new Mario(...unitParams);
+        break;
+      case "Boo":
+        unit = new Boo(...unitParams);
+        break;
       default:
         unit = new Unit(...unitParams);
         break;
