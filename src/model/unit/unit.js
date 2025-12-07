@@ -297,7 +297,7 @@ class Unit {
       // 애니메이션 상태 변경
       if (this.currentAttackCooldown > this.attackCooldown * 0.6) {
         // 공격 중이면 attack 애니메이션
-        this.setAnimation("idle");
+        this.setAnimation("attack");
       } else if (Math.abs(this.velocityX) > 0.1 || Math.abs(this.velocityY) > 0.1) {
         // 이동 중이면 walk 애니메이션
         this.setAnimation("walk");
