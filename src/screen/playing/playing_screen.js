@@ -15,6 +15,11 @@ class PlayingScreen extends GameScreen {
 
     // 드래그 중인 유닛
     this.draggedUnit = null;
+
+    // 궁극기 리스트
+    this.ultimates = [];
+    this.ultimateIdCounter = 0;
+    this.ultimateUsed = false;
   }
 
   onEnter() {
@@ -36,6 +41,17 @@ class PlayingScreen extends GameScreen {
       ...this.playerManager.units,
       this.playerManager.home // 내 집 추가
     ]);
+
+    // 궁극기 업데이트
+    for (let i = this.ultimates.length - 1; i >= 0; i--) {
+      const ultimate = this.ultimates[i];
+      ultimate.update(this.enemyManager.enemies);
+
+      // isActive가 false인 궁극기 제거
+      if (!ultimate.isActive) {
+        this.ultimates.splice(i, 1);
+      }
+    }
 
     // 게임 상태 체크
     if (this.playerManager.hp <= 0) {
@@ -61,6 +77,11 @@ class PlayingScreen extends GameScreen {
     this.interfaceManager.render();
     this.playerManager.render();
     this.enemyManager.render();
+
+     for (const ultimate of this.ultimates) {
+       ultimate.render();
+     }
+   
 
     resetMatrix();
   }
@@ -130,6 +151,47 @@ class PlayingScreen extends GameScreen {
     this.interfaceManager.addUnitButton(2);
     this.interfaceManager.addUnitButton(3);
     this.interfaceManager.addUnitButton(4);
+    this.interfaceManager.addUltimateButton(ultimateImage, () => this.activateUltimate());
+  }
+
+  activateUltimate() {
+    // 이미 사용한 경우 무시
+    if (this.ultimateUsed) {
+      console.log("궁극기는 한 번만 사용할 수 있습니다!");
+      return;
+    }
+
+    console.log("궁극기 발동!");
+    this.ultimateUsed = true;
+
+    // 궁극기 버튼 제거
+    this.interfaceManager.removeUltimateButton();
+
+    // 궁극기 생성
+    const ultimate = new Ultimate(
+      this.ultimateIdCounter++,
+      0, // 시작 x 위치
+      floorY - 100, // y 위치 (바닥 위)
+      50, // width
+      50, // height
+      ultimateSpriteSheet, // spriteSheet
+      {
+        move: {
+          frameCount: 4,
+          frameWidth: 160,
+          frameHeight: 145,
+          startX: 440,
+          startY: 315,
+          speed: 2,
+          scale: 0.3,
+          spacing: 40,
+        },
+      }, // animations (직접 추가)
+      999999, // damage
+      8 // moveSpeed
+    );
+
+    this.ultimates.push(ultimate);
   }
 
   /// 게임 필드 그리기

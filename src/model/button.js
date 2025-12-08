@@ -28,10 +28,12 @@ class ImageButton extends Button {
         image,
         onPressed,
         color,
-        strockColor
+        strockColor,
+        imageCrop = null // { sx, sy, sWidth, sHeight }
     ) {
         super(x, y, width, height, onPressed, color, strockColor);
         this.image = image;
+        this.imageCrop = imageCrop;
     }
 
     render() {
@@ -47,7 +49,17 @@ class ImageButton extends Button {
         }
         rect(this.x, this.y, this.width, this.height);
         if (this.image) {
-            image(this.image, this.x, this.y, this.width, this.height);
+            if (this.imageCrop) {
+                // 이미지 크롭 사용
+                image(
+                    this.image,
+                    this.x, this.y, this.width, this.height,
+                    this.imageCrop.sx, this.imageCrop.sy, this.imageCrop.sWidth, this.imageCrop.sHeight
+                );
+            } else {
+                // 전체 이미지 사용
+                image(this.image, this.x, this.y, this.width, this.height);
+            }
         }
     }
 }

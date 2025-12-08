@@ -38,4 +38,6 @@ function initialData() {
     };
     homeImage = loadImage('assets/images/home.png');
     enemyHomeImage = loadImage("assets/images/home.png");
+    ultimateImage = loadImage('assets/ultimate/question_box.png');
+    ultimateSpriteSheet = loadImage('assets/ultimate/ultimate_1.png');
 }

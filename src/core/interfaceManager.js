@@ -5,6 +5,8 @@ class InterfaceManager {
   constructor() {
     this.unitButtons = [];
     this.unitTypes = [];
+    this.ultimateButton = null;
+    this.ultimateImage = null;
     /// type: Button
     this.buttons = [
       new ImageButton(
@@ -102,6 +104,12 @@ class InterfaceManager {
         handled = true;
       }
     });
+
+    // 궁극기 버튼 체크
+    if (this.ultimateButton && this.ultimateButton.contains(x, y)) {
+      this.ultimateButton.onPressed();
+      handled = true;
+    }
 
     this.buttons.forEach((button) => {
       if (button.contains(x, y)) {
@@ -335,6 +343,11 @@ class InterfaceManager {
     this.unitButtons.forEach((button) => {
       button.render();
     });
+
+    /// 궁극기 버튼
+    if (this.ultimateButton) {
+      this.ultimateButton.render();
+    }
   }
 
   addUnitButton(index) {
@@ -358,5 +371,40 @@ class InterfaceManager {
     );
 
     this.unitButtons.push(button);
+  }
+
+  addUltimateButton(image, onActivate) {
+    const margin = 20;
+    const padding = 15;
+    const unitWidth = 100;
+    const ultimateSize = 120;
+
+    // 유닛 버튼 개수를 기준으로 오른쪽에 배치
+    const unitButtonCount = this.unitButtons.length;
+    const xPosition = this.bottomInterfaceFrame.x + margin + (unitWidth + padding) * unitButtonCount + padding;
+
+    // 700x700 이미지에서 중앙 640x640만 사용
+    const imageCrop = {
+      sx: 60,  // (700 - 640) / 2
+      sy: 60,  // (700 - 640) / 2
+      sWidth: 640,
+      sHeight: 640
+    };
+
+    this.ultimateButton = new ImageButton(
+      xPosition,
+      this.bottomInterfaceFrame.y + margin + 10,
+      ultimateSize,
+      ultimateSize,
+      image,
+      onActivate || (() => console.log("궁극기 발동!")),
+      null,
+      null,
+      imageCrop
+    );
+  }
+
+  removeUltimateButton() {
+    this.ultimateButton = null;
   }
 }

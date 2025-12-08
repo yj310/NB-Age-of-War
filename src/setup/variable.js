@@ -48,6 +48,14 @@ let homeImage = null;
 /// type: Image
 let enemyHomeImage = null;
 
+/// 궁극기 버튼 이미지
+/// type: Image
+let ultimateImage = null;
+
+/// 궁극기 스프라이트 시트
+/// type: Image
+let ultimateSpriteSheet = null;
+
 
 /// 이전 마우스 위치
 /// type: int
