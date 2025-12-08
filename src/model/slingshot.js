@@ -17,27 +17,127 @@ class Slingshot {
     push();
     translate(this.x, this.y);
 
-    // 새총 본체 (Y자 모양)
-    stroke(139, 69, 19); // 갈색
-    strokeWeight(4);
+    // 새총 본체 (Y자 모양) - 실제 새총처럼
+    stroke(60, 35, 20);
+    strokeWeight(3);
 
-    // 왼쪽 지지대
-    line(-15, 0, -10, -30);
-    // 오른쪽 지지대
-    line(15, 0, 10, -30);
-    // 가로 연결대
-    line(-10, -30, 10, -30);
+    // 손잡이 부분 (하단 세로 막대)
+    fill(101, 67, 33); // 갈색
+    rect(-4, 0, 8, 20, 2);
+
+    // 손잡이 하이라이트
+    fill(139, 90, 43);
+    rect(-3, 2, 6, 16, 1);
+
+    // Y자 분기점 (중간 부분)
+    noStroke();
+    fill(101, 67, 33);
+    ellipse(0, -5, 10, 8);
+
+    // 왼쪽 가지 (위쪽 왼쪽으로 뻗어나감)
+    stroke(60, 35, 20);
+    strokeWeight(3);
+    fill(101, 67, 33);
+    // 왼쪽 가지 본체
+    beginShape();
+    vertex(0, -5);
+    vertex(-2, -8);
+    vertex(-8, -25);
+    vertex(-10, -28);
+    vertex(-8, -30);
+    vertex(-5, -28);
+    vertex(-2, -10);
+    vertex(0, -5);
+    endShape(CLOSE);
+
+    // 왼쪽 가지 하이라이트
+    noStroke();
+    fill(139, 90, 43);
+    beginShape();
+    vertex(0, -5);
+    vertex(-1, -7);
+    vertex(-6, -24);
+    vertex(-8, -27);
+    vertex(-6, -28);
+    vertex(-3, -9);
+    vertex(0, -5);
+    endShape(CLOSE);
+
+    // 오른쪽 가지 (위쪽 오른쪽으로 뻗어나감)
+    stroke(60, 35, 20);
+    strokeWeight(3);
+    fill(101, 67, 33);
+    beginShape();
+    vertex(0, -5);
+    vertex(2, -8);
+    vertex(8, -25);
+    vertex(10, -28);
+    vertex(8, -30);
+    vertex(5, -28);
+    vertex(2, -10);
+    vertex(0, -5);
+    endShape(CLOSE);
+
+    // 오른쪽 가지 하이라이트
+    noStroke();
+    fill(139, 90, 43);
+    beginShape();
+    vertex(0, -5);
+    vertex(1, -7);
+    vertex(6, -24);
+    vertex(8, -27);
+    vertex(6, -28);
+    vertex(3, -9);
+    vertex(0, -5);
+    endShape(CLOSE);
 
     // 새총 고무줄 (장전 중일 때)
     if (this.loadedUnit) {
-      stroke(0, 0, 0);
-      strokeWeight(2);
       const unitOffsetX = this.loadedUnit.dragOffsetX - this.x;
       const unitOffsetY = this.loadedUnit.dragOffsetY - this.y;
-      // 왼쪽 고무줄
-      line(-10, -30, unitOffsetX, unitOffsetY);
+
+      // 고무줄 연결점 (왼쪽 가지 끝)
+      noStroke();
+      fill(50, 50, 50);
+      ellipse(-8, -29, 5, 5);
+      fill(80, 80, 80);
+      ellipse(-8, -29, 3, 3);
+
+      // 고무줄 연결점 (오른쪽 가지 끝)
+      fill(50, 50, 50);
+      ellipse(8, -29, 5, 5);
+      fill(80, 80, 80);
+      ellipse(8, -29, 3, 3);
+
+      // 왼쪽 고무줄 (검은색 고무줄)
+      stroke(20, 20, 20);
+      strokeWeight(3);
+      line(-8, -29, unitOffsetX, unitOffsetY);
+      // 고무줄 하이라이트
+      stroke(60, 60, 60);
+      strokeWeight(1);
+      line(-8, -29, unitOffsetX, unitOffsetY);
+
       // 오른쪽 고무줄
-      line(10, -30, unitOffsetX, unitOffsetY);
+      stroke(20, 20, 20);
+      strokeWeight(3);
+      line(8, -29, unitOffsetX, unitOffsetY);
+      // 고무줄 하이라이트
+      stroke(60, 60, 60);
+      strokeWeight(1);
+      line(8, -29, unitOffsetX, unitOffsetY);
+
+      // 포켓 (가죽 부분) - 유닛이 있는 위치에
+      noStroke();
+      // 포켓 외곽 (어두운 갈색)
+      fill(60, 40, 20, 200);
+      ellipse(unitOffsetX, unitOffsetY + 1, 18, 14);
+      // 포켓 본체 (갈색 가죽)
+      fill(101, 67, 33, 220);
+      ellipse(unitOffsetX, unitOffsetY, 16, 12);
+      // 포켓 하이라이트
+      fill(139, 90, 43, 180);
+      ellipse(unitOffsetX - 2, unitOffsetY - 2, 10, 8);
 
       // 장전된 유닛 렌더링
       push();
@@ -87,18 +187,44 @@ class Slingshot {
       pop();
     } else if (this.isAiming) {
       // 조준 중일 때 고무줄 표시
-      stroke(100, 100, 100);
-      strokeWeight(2);
       const pullX = cos(this.aimAngle) * this.aimPower;
       const pullY = sin(this.aimAngle) * this.aimPower;
-      line(-10, -30, pullX, pullY);
-      line(10, -30, pullX, pullY);
+
+      // 고무줄 연결점
+      noStroke();
+      fill(50, 50, 50);
+      ellipse(-8, -29, 5, 5);
+      ellipse(8, -29, 5, 5);
+      fill(80, 80, 80);
+      ellipse(-8, -29, 3, 3);
+      ellipse(8, -29, 3, 3);
+
+      // 고무줄
+      stroke(20, 20, 20);
+      strokeWeight(3);
+      line(-8, -29, pullX, pullY);
+      line(8, -29, pullX, pullY);
+
+      // 고무줄 하이라이트
+      stroke(60, 60, 60);
+      strokeWeight(1);
+      line(-8, -29, pullX, pullY);
+      line(8, -29, pullX, pullY);
+
+      // 포켓 미리보기
+      noStroke();
+      fill(60, 40, 20, 120);
+      ellipse(pullX, pullY + 1, 18, 14);
+      fill(101, 67, 33, 150);
+      ellipse(pullX, pullY, 16, 12);
+      fill(139, 90, 43, 120);
+      ellipse(pullX - 2, pullY - 2, 10, 8);
     }
 
-    // 새총 받침대 (원형)
-    fill(139, 69, 19);
+    // 손잡이 하단 강조 (그림자 효과)
+    fill(60, 35, 20, 150);
     noStroke();
-    ellipse(0, 0, 20, 20);
+    ellipse(0, 18, 10, 4);
 
     // 장전 범위 표시 (디버그용, 선택적)
     if (this.loadedUnit) {
