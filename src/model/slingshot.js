@@ -17,56 +17,95 @@ class Slingshot {
     push();
     translate(this.x, this.y);
 
-    // 새총 본체 - 심플하고 예쁘게
+    // 기준점 기준:
+    // (0, 0) = 손잡이와 가지가 갈라지는 분기점
+    // 아래(+Y)로 손잡이, 위(-Y)로 두 가지가 올라감
+
+    const lightR = 196, lightG = 145, lightB = 84;   // 기본 나무색
+    const darkR = 150, darkG = 100, darkB = 60;     // 나무 그림자색
+
+    // 손잡이 (세로 막대) - 두께 일정
     noStroke();
-    fill(180, 140, 100); // 나무색
+    fill(lightR, lightG, lightB);
+    rect(-6, -6, 12, 36, 4); // x, y, w, h
 
-    // 손잡이 (하단 세로 막대) - 상단을 둥글게
-    rect(-4, -5, 8, 30, 2);
-    // 손잡이 상단 둥근 부분
-    ellipse(0, -2, 10, 6);
+    // 중앙 어두운 나무결 (살짝 그림자)
+    fill(darkR, darkG, darkB);
+    rect(-6, -3, 4, 32, 4);
 
-    // 왼쪽 가지 - 손잡이 상단에서 부드럽게 이어지도록
-    stroke(180, 140, 100);
-    strokeWeight(4);
-    // 손잡이 상단 왼쪽에서 시작해서 위쪽 왼쪽으로
-    beginShape();
-    vertex(-4, -2);
-    bezierVertex(-4, -2, -5, -8, -8, -26);
-    endShape();
+    // 오른쪽 가지 ------------------------------------------------
+    push();
+    translate(0, 0);
+    rotate(PI / 10);           // 오른쪽으로 살짝 기울이기
 
-    // 오른쪽 가지 - 손잡이 상단에서 부드럽게 이어지도록
-    beginShape();
-    vertex(4, -2);
-    bezierVertex(4, -2, 5, -8, 8, -26);
-    endShape();
+    // 오른쪽 나무 막대
+    fill(lightR, lightG, lightB);
+    rect(-5, -32, 10, 30, 4);
 
-    noStroke();
+    // 중앙 어두운 나무결
+    fill(darkR, darkG, darkB);
+    rect(-5, -32, 4, 30, 4);
 
-    // 새총 고무줄 (장전 중일 때)
+    // 오른쪽 밴드
+    fill(80, 55, 35);
+    rect(-5, -30, 10, 8, 3);
+
+    // 오른쪽 윗면
+    fill(lightR, lightG, lightB);
+    rect(-5, -36, 10, 6, 3);
+    pop();
+
+    // 왼쪽 가지 -------------------------------------------------
+    push();
+    translate(0, 0);           // 분기점에서 시작
+    rotate(-PI / 10);          // 왼쪽으로 살짝 기울이기
+
+    // 왼쪽 나무 막대
+    fill(lightR, lightG, lightB);
+    rect(-5, -32, 10, 30, 4);  // 분기점에서 위로 올라가는 막대
+
+    // 중앙 어두운 나무결
+    fill(darkR, darkG, darkB);
+    rect(-5, -32, 4, 30, 4);
+
+    // 왼쪽 밴드 (끈 감은 부분)
+    fill(80, 55, 35);
+    rect(-5, -30, 10, 8, 3);
+
+    // 왼쪽 윗면 (밝은 나무색 원통 윗면)
+    fill(lightR, lightG, lightB);
+    rect(-5, -36, 10, 6, 3);
+    pop();
+
+
+    // --------------------------------------------------------------------
+    // 새총 고무줄 & 포켓
+    // 고무줄은 화면 좌표 기준으로 대략 가지 윗부분에 연결되도록 고정 좌표 사용
+    const leftBandX = -12;
+    const leftBandY = -28;
+    const rightBandX = 12;
+    const rightBandY = -28;
+
     if (this.loadedUnit) {
       const unitOffsetX = this.loadedUnit.dragOffsetX - this.x;
       const unitOffsetY = this.loadedUnit.dragOffsetY - this.y;
 
-      // 왼쪽 고무줄
+      // 고무줄
       stroke(0);
       strokeWeight(2);
-      line(-8, -26, unitOffsetX, unitOffsetY);
-
-      // 오른쪽 고무줄
-      line(8, -26, unitOffsetX, unitOffsetY);
+      line(leftBandX, leftBandY, unitOffsetX, unitOffsetY);
+      line(rightBandX, rightBandY, unitOffsetX, unitOffsetY);
 
       // 포켓 (가죽 부분)
       noStroke();
       fill(100, 70, 40, 200);
       ellipse(unitOffsetX, unitOffsetY, 14, 10);
 
-      // 장전된 유닛 렌더링
+      // 장전된 유닛 렌더링 (기존 로직 유지)
       push();
       translate(unitOffsetX, unitOffsetY);
       tint(255, 200); // 반투명
 
-      // 스프라이트 시트가 있으면 애니메이션 프레임을 그림
       if (this.loadedUnit.spriteSheet && this.loadedUnit.animations && this.loadedUnit.animations[this.loadedUnit.currentAnimation]) {
         const anim = this.loadedUnit.animations[this.loadedUnit.currentAnimation];
         const spacing = anim.spacing || 0;
@@ -85,7 +124,6 @@ class Slingshot {
           anim.frameHeight
         );
       } else if (this.loadedUnit.image) {
-        // 기본 이미지 사용
         image(
           this.loadedUnit.image,
           -this.loadedUnit.width / 2,
@@ -94,7 +132,6 @@ class Slingshot {
           this.loadedUnit.height
         );
       } else {
-        // 이미지가 없으면 네모로 표시
         fill(100, 100, 200, 200);
         rect(
           -this.loadedUnit.width / 2,
@@ -108,22 +145,19 @@ class Slingshot {
       noTint();
       pop();
     } else if (this.isAiming) {
-      // 조준 중일 때 고무줄 표시
+      // 조준 중일 때 고무줄 표시 (포켓만 마우스 위치로 이동)
       const pullX = cos(this.aimAngle) * this.aimPower;
       const pullY = sin(this.aimAngle) * this.aimPower;
 
-      // 고무줄 (조준 중일 때)
       stroke(0);
       strokeWeight(2);
-      line(-8, -26, pullX, pullY);
-      line(8, -26, pullX, pullY);
+      line(leftBandX, leftBandY, pullX, pullY);
+      line(rightBandX, rightBandY, pullX, pullY);
 
-      // 포켓 미리보기
       noStroke();
       fill(120, 90, 60, 150);
       ellipse(pullX, pullY, 16, 12);
     }
-
 
     // 장전 범위 표시 (디버그용, 선택적)
     if (this.loadedUnit) {
