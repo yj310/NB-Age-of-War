@@ -23,6 +23,7 @@ function initialData() {
     setGameState(gameState);
 
     // 이미지 로드
+    backgroundImage = loadImage("assets/images/background.png");
     unit1SpriteImageList = [
       loadImage("assets/unit/unit_1.png"),
       loadImage("assets/unit/unit_2.png"),

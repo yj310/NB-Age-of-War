@@ -134,7 +134,11 @@ class PlayingScreen extends GameScreen {
 
   /// 게임 필드 그리기
   drawGameField() {
+    if (backgroundImage) {
+      image(backgroundImage, 0, 0, mainFrame.width, mainFrame.height);
+    }
     this.playerManager.render();
     this.enemyManager.render();
   }
 }
+ 

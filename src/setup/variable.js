@@ -19,6 +19,10 @@ let foundation = null;
 /// type: Frame
 let mainFrame = null;
 
+/// 게임 배경 이미지
+/// type: Image
+let backgroundImage = null;
+
 /// 게임 상태
 /// type: GameState
 let gameState = GameState.mainMenu;
