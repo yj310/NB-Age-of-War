@@ -92,7 +92,9 @@ class EnemyManager {
       enemyType.attackCooldown,
       enemyType.attackRange,
       enemyType.spriteSheet,
-      enemyType.animations
+      enemyType.animations,
+      enemyType.collisionWidth,
+      enemyType.collisionHeight,
     ];
 
     switch (enemyType.name) {

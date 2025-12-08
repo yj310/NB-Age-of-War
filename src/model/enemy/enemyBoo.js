@@ -15,7 +15,9 @@ class EnemyBoo extends Enemy {
     attackCooldown = 30,
     attackRange = 5,
     spriteSheet = null,
-    animations = null
+    animations = null,
+    collisionWidth = null,
+    collisionHeight = null
   ) {
     // 부모 클래스 생성자 호출
     super(
@@ -34,7 +36,9 @@ class EnemyBoo extends Enemy {
       attackCooldown,
       attackRange,
       spriteSheet,
-      animations 
+      animations,
+      collisionWidth,
+      collisionHeight
     );
 
     // EnemyBoo만의 고유 속성 추가

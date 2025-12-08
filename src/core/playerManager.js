@@ -14,7 +14,7 @@ class PlayerManager {
     this.maxLevel = 3;
     this.xp = 0;
     this.maxXp = 100;
-    
+
     // 새총을 집 지붕 위에 배치
     const slingshotX = this.home.x + this.home.width / 2;
     const slingshotY = this.home.y - 10; // 지붕 위
@@ -77,6 +77,8 @@ class PlayerManager {
       unitType.attackRange,
       unitType.spriteSheet,
       unitType.animations,
+      unitType.collisionWidth,
+      unitType.collisionHeight,
     ];
 
     switch (unitType.name) {
@@ -107,7 +109,7 @@ class PlayerManager {
     // 바로 스폰하지 않고 대기열에 넣기
     this.spawnQueue.push(unit);
   }
-  
+
   // 특정 유닛 타입의 대기 개수 반환
   getQueueCount(unitTypeIndex) {
     return this.spawnQueue.filter(unit => unit.unitTypeIndex === unitTypeIndex).length;

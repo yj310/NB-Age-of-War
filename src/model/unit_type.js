@@ -12,7 +12,9 @@ class UnitType {
         attackCooldown = 30,
         attackRange = 5,
         spriteSheet = null,
-        animations = null
+        animations = null,
+        collisionWidth = null,
+        collisionHeight = null
     ) {
         this.name = name;
         this.image = image;
@@ -27,5 +29,8 @@ class UnitType {
         this.attackRange = attackRange;
         this.spriteSheet = spriteSheet;
         this.animations = animations;
+        // 충돌 감지 사이즈 (기본값: width/2, height)
+        this.collisionWidth = collisionWidth !== null ? collisionWidth : width / 2;
+        this.collisionHeight = collisionHeight !== null ? collisionHeight : height;
     }
 }

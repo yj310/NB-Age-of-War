@@ -15,15 +15,21 @@ class Unit {
     attackCooldown = 30,
     attackRange = 5,
     spriteSheet = null,
-    animations = null
+    animations = null,
+    collisionWidth = null,
+    collisionHeight = null
   ) {
     this.id = id;
     this.image = image;
     this.level = level;
     this.x = x;
     this.y = y;
+    // 렌더링 사이즈 (이미지가 그려지는 크기)
     this.width = width;
     this.height = height;
+    // 충돌 감지 사이즈 (상대편 유닛과 부딪혔는지 계산하는 크기)
+    this.collisionWidth = collisionWidth !== null ? collisionWidth : width / 2;
+    this.collisionHeight = collisionHeight !== null ? collisionHeight : height;
     this.velocityX = velocityX;
     this.velocityY = velocityY;
     this.maxHp = hp;
@@ -43,7 +49,7 @@ class Unit {
     this.currentAnimation = "idle";
     this.currentFrame = 0;
     this.frameCounter = 0;
-    
+
     // 드래그/던지기 관련 속성
     this.isDragged = false;
     this.isThrown = false;
@@ -54,7 +60,7 @@ class Unit {
     this.lastMouseY = 0;
     this.throwVelocityX = 0;
     this.throwVelocityY = 0;
-    
+
     // 새총 발사 관련 속성
     this.isSlingshotFired = false;
     this.slingshotTargetX = 0;
@@ -120,23 +126,23 @@ class Unit {
     // 데미지 숫자 렌더링
     this.renderDamageNumbers(renderX);
   }
-  
+
   renderDamageNumbers(renderX) {
     for (let i = this.damageNumbers.length - 1; i >= 0; i--) {
       const dmg = this.damageNumbers[i];
       dmg.life--;
-      
+
       if (dmg.life <= 0) {
         this.damageNumbers.splice(i, 1);
         continue;
       }
-      
+
       const alpha = dmg.life / dmg.maxLife;
       const offsetY = (dmg.maxLife - dmg.life) * 2;
-      
+
       // 데미지 숫자 위치를 현재 유닛 위치 기준으로 업데이트
       const currentX = renderX + this.width / 2;
-      
+
       fill(255, 0, 0, 255 * alpha);
       textSize(16);
       textAlign(CENTER);
@@ -144,7 +150,7 @@ class Unit {
       noFill();
     }
   }
-  
+
   renderHpBar(renderX) {
     const barWidth = this.width;
     const barHeight = 4;
@@ -211,11 +217,11 @@ class Unit {
       if (this.isSlingshotFired) {
         // 중력 적용
         this.throwVelocityY += this.gravity;
-        
+
         // 이동
         this.x += this.throwVelocityX;
         this.y += this.throwVelocityY;
-        
+
         // 바닥 충돌 체크
         const hitGround = this.y + this.height >= floorY;
         if (hitGround) {
@@ -225,11 +231,11 @@ class Unit {
           this.hp = 0;
           return;
         }
-        
+
         // 적과 충돌 체크
         for (const other of others) {
           if (other === this) continue;
-          
+
           if (other.type === EntityType.ENEMY && this.isColliding(other)) {
             // 적과 충돌 시 폭발 데미지 처리
             this.explode(others);
@@ -238,11 +244,11 @@ class Unit {
             return;
           }
         }
-        
+
         // 상대편 집(EnemyHome)과 충돌 체크
         for (const other of others) {
           if (other === this) continue;
-          
+
           // EnemyHome은 type이 없을 수 있으므로 클래스 이름으로 체크
           if (other.constructor && other.constructor.name === 'EnemyHome' && this.isColliding(other)) {
             // 상대편 집과 충돌 시 폭발 데미지 처리
@@ -252,7 +258,7 @@ class Unit {
             return;
           }
         }
-        
+
         // 새총 발사된 유닛은 여기서 종료 (일반 충돌 체크 안 함)
         return;
       } else {
@@ -260,7 +266,7 @@ class Unit {
         this.throwVelocityY += this.gravity;
         this.x += this.throwVelocityX;
         this.y += this.throwVelocityY;
-        
+
         // 바닥 충돌 체크
         if (this.y + this.height >= floorY) {
           this.y = floorY - this.height;
@@ -321,7 +327,7 @@ class Unit {
           if (other.type === EntityType.ENEMY) {
             this.x = prevX;
             this.y = prevY;
-            
+
             // 충돌 중이면 공격 범위 내로 간주 (공격 가능)
             if (this.currentAttackCooldown === 0) {
               this.attackTarget(other);
@@ -335,22 +341,22 @@ class Unit {
           }
         }
       }
-      
+
       // 3. 적 집(EnemyHome)과 충돌 체크 - 집 앞에 도달했는지
       for (const other of others) {
         if (other === this) continue;
-        
+
         // EnemyHome 클래스인지 확인
         if (other.constructor && other.constructor.name === 'EnemyHome') {
           // 집의 왼쪽 가장자리
           const homeLeftEdge = other.x;
           const distanceToHome = this.x + this.width - homeLeftEdge;
-          
+
           // 집 앞 공격 범위 내에 있으면 멈추고 공격
           if (distanceToHome <= other.attackRange && distanceToHome >= -this.width) {
             this.x = prevX;
             this.y = prevY;
-            
+
             // 공격 쿨다운이 끝나면 집 공격
             if (this.currentAttackCooldown === 0) {
               this.attackEnemyHome(other);
@@ -362,12 +368,12 @@ class Unit {
       // 던져진 상태일 때는 적과 충돌 시 데미지
       for (const other of others) {
         if (other === this) continue;
-        
+
         if (this.isColliding(other) && other.type === EntityType.ENEMY) {
           // 적에게 데미지
           const damage = Math.min(this.damage * 2, other.hp); // 던지기 데미지는 2배
           other.hp -= damage;
-          
+
           if (other.damageNumbers) {
             other.damageNumbers.push({
               value: damage,
@@ -377,7 +383,7 @@ class Unit {
               maxLife: 30
             });
           }
-          
+
           // 던지기 상태 해제하고 일반 상태로 전환
           this.isThrown = false;
           this.throwVelocityX = 0;
@@ -387,7 +393,7 @@ class Unit {
       }
     }
   }
-  
+
   // 유닛을 드래그 시작
   startDrag(mouseX, mouseY) {
     this.isDragged = true;
@@ -396,7 +402,7 @@ class Unit {
     this.lastMouseX = mouseX;
     this.lastMouseY = mouseY;
   }
-  
+
   // 드래그 중 위치 업데이트
   updateDrag(mouseX, mouseY) {
     if (!this.isDragged) return;
@@ -406,18 +412,18 @@ class Unit {
     this.lastMouseX = mouseX;
     this.lastMouseY = mouseY;
   }
-  
+
   // 드래그 종료 및 던지기
   endDrag(mouseX, mouseY) {
     if (!this.isDragged) return;
-    
+
     this.isDragged = false;
-    
+
     // 던지기 속도 계산 (마우스 이동 방향과 거리 기반)
     const deltaX = mouseX - this.lastMouseX;
     const deltaY = mouseY - this.lastMouseY;
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    
+
     // 최소 거리 이상 움직였을 때만 던지기
     if (distance > 10) {
       this.isThrown = true;
@@ -430,7 +436,7 @@ class Unit {
       this.throwVelocityY = 0;
     }
   }
-  
+
   // 마우스가 유닛 위에 있는지 확인
   isPointInside(px, py) {
     return (
@@ -440,14 +446,14 @@ class Unit {
       py <= this.y + this.height
     );
   }
-  
+
   attackTarget(target) {
     if (!target || target.hp <= 0) return;
-    
+
     // 데미지 적용
     const actualDamage = Math.min(this.damage, target.hp);
     target.hp -= actualDamage;
-    
+
     // 데미지 숫자 표시
     if (target.damageNumbers) {
       target.damageNumbers.push({
@@ -458,58 +464,75 @@ class Unit {
         maxLife: 30
       });
     }
-    
+
     // 공격 쿨다운 설정
     this.currentAttackCooldown = this.attackCooldown;
-    
+
     // 공격 애니메이션 시작
     this.attackAnimationOffset = -3;
     this.attackAnimationDirection = 1;
   }
-  
+
   // 적 집 공격
   attackEnemyHome(enemyHome) {
     if (!enemyHome || !enemyHome.enemyManager) return;
-    
+
     // 적 집의 HP 감소
     const damage = Math.min(this.damage, enemyHome.enemyManager.hp);
     enemyHome.enemyManager.hp -= damage;
-    
+
     // 공격 쿨다운 설정
     this.currentAttackCooldown = this.attackCooldown;
-    
+
     // 공격 애니메이션 시작
     this.attackAnimationOffset = -3;
     this.attackAnimationDirection = 1;
   }
   isColliding(other) {
+    // 충돌 감지에는 collisionWidth/collisionHeight 사용
+    // 충돌 박스는 렌더링 박스의 중심에 맞춰짐
+    const thisCollisionWidth = this.collisionWidth;
+    const thisCollisionHeight = this.collisionHeight;
+    const thisCollisionX = this.x + (this.width - thisCollisionWidth) / 2;
+    const thisCollisionY = this.y + (this.height - thisCollisionHeight) / 2;
+
+    // other 객체도 충돌 크기가 있으면 사용, 없으면 기존 width/height 사용
+    const otherCollisionWidth = other.collisionWidth !== undefined ? other.collisionWidth : other.width;
+    const otherCollisionHeight = other.collisionHeight !== undefined ? other.collisionHeight : other.height;
+    const otherCollisionX = other.collisionWidth !== undefined
+      ? other.x + (other.width - otherCollisionWidth) / 2
+      : other.x;
+    const otherCollisionY = other.collisionHeight !== undefined
+      ? other.y + (other.height - otherCollisionHeight) / 2
+      : other.y;
+
     return (
-      this.x < other.x + other.width &&
-      this.x + this.width > other.x &&
-      this.y < other.y + other.height &&
-      this.y + this.height > other.y
+      thisCollisionX < otherCollisionX + otherCollisionWidth &&
+      thisCollisionX + thisCollisionWidth > otherCollisionX &&
+      thisCollisionY < otherCollisionY + otherCollisionHeight &&
+      thisCollisionY + thisCollisionHeight > otherCollisionY
     );
   }
 
-  attack() {}
-  
+  attack() { }
+
   isAlive() {
     return this.hp > 0;
   }
-  
+
   // 폭발 데미지 처리
   explode(others) {
     if (!this.slingshotDamage) return;
-    
+
     // 폭발 시각 효과 (선택적)
     // 여기서는 데미지만 처리
-    
+
     for (const other of others) {
       if (other === this) continue;
-      
+
       // 적에게만 데미지 적용
       if (other.type !== EntityType.ENEMY) continue;
-      
+
       // 거리 계산 (폭발 중심은 현재 유닛 위치)
       const explosionX = this.x + this.width / 2;
       const explosionY = this.y + this.height / 2;
@@ -518,12 +541,12 @@ class Unit {
       const dx = otherCenterX - explosionX;
       const dy = otherCenterY - explosionY;
       const distance = sqrt(dx * dx + dy * dy);
-      
+
       // 폭발 반경 내에 있으면 데미지 및 밀려남
       if (distance <= this.explosionRadius) {
         const damage = Math.min(this.slingshotDamage, other.hp);
         other.hp -= damage;
-        
+
         if (other.damageNumbers) {
           other.damageNumbers.push({
             value: damage,
@@ -533,22 +556,22 @@ class Unit {
             maxLife: 30
           });
         }
-        
+
         // 적을 뒤로 밀어내기 (폭발 중심에서 멀어지는 방향)
         // 거리에 반비례하여 밀려나는 힘 계산 (가까울수록 강하게)
         const knockbackPower = (1 - distance / this.explosionRadius) * 8; // 최대 8의 힘
         const knockbackAngle = atan2(dy, dx); // 폭발 중심에서 적으로의 방향
-        
+
         // 적의 velocity에 밀려나는 힘 추가 (뒤로 밀려나므로 반대 방향)
         other.velocityX += cos(knockbackAngle) * knockbackPower;
         other.velocityY += sin(knockbackAngle) * knockbackPower * 0.5; // 수직 방향은 약하게
       }
     }
-    
+
     // 상대편 집(EnemyHome)에도 데미지 적용
     for (const other of others) {
       if (other === this) continue;
-      
+
       if (other.constructor && other.constructor.name === 'EnemyHome') {
         const explosionX = this.x + this.width / 2;
         const explosionY = this.y + this.height / 2;
@@ -557,7 +580,7 @@ class Unit {
         const dx = homeCenterX - explosionX;
         const dy = homeCenterY - explosionY;
         const distance = sqrt(dx * dx + dy * dy);
-        
+
         // 폭발 반경 내에 있으면 데미지
         if (distance <= this.explosionRadius && other.enemyManager) {
           const damage = Math.min(this.slingshotDamage, other.enemyManager.hp);

@@ -1,12 +1,16 @@
 class Enemy {
-  constructor(id, image, level, x, y, width, height, velocityX, velocityY, hp, type, damage = 10, attackCooldown = 30, attackRange = 5, spriteSheet = null, animations = null) {
+  constructor(id, image, level, x, y, width, height, velocityX, velocityY, hp, type, damage = 10, attackCooldown = 30, attackRange = 5, spriteSheet = null, animations = null, collisionWidth = null, collisionHeight = null) {
     this.id = id;
     this.image = image;
     this.level = level;
     this.x = x;
     this.y = y;
+    // 렌더링 사이즈 (이미지가 그려지는 크기)
     this.width = width;
     this.height = height;
+    // 충돌 감지 사이즈 (상대편 유닛과 부딪혔는지 계산하는 크기)
+    this.collisionWidth = collisionWidth !== null ? collisionWidth : width / 2;
+    this.collisionHeight = collisionHeight !== null ? collisionHeight : height;
     this.velocityX = velocityX;
     this.velocityY = velocityY;
     this.maxHp = hp;
@@ -166,11 +170,28 @@ class Enemy {
   }
 
   isColliding(other) {
+    // 충돌 감지에는 collisionWidth/collisionHeight 사용
+    // 충돌 박스는 렌더링 박스의 중심에 맞춰짐
+    const thisCollisionWidth = this.collisionWidth;
+    const thisCollisionHeight = this.collisionHeight;
+    const thisCollisionX = this.x + (this.width - thisCollisionWidth) / 2;
+    const thisCollisionY = this.y + (this.height - thisCollisionHeight) / 2;
+
+    // other 객체도 충돌 크기가 있으면 사용, 없으면 기존 width/height 사용
+    const otherCollisionWidth = other.collisionWidth !== undefined ? other.collisionWidth : other.width;
+    const otherCollisionHeight = other.collisionHeight !== undefined ? other.collisionHeight : other.height;
+    const otherCollisionX = other.collisionWidth !== undefined
+      ? other.x + (other.width - otherCollisionWidth) / 2
+      : other.x;
+    const otherCollisionY = other.collisionHeight !== undefined
+      ? other.y + (other.height - otherCollisionHeight) / 2
+      : other.y;
+
     return (
-      this.x < other.x + other.width &&
-      this.x + this.width > other.x &&
-      this.y < other.y + other.height &&
-      this.y + this.height > other.y
+      thisCollisionX < otherCollisionX + otherCollisionWidth &&
+      thisCollisionX + thisCollisionWidth > otherCollisionX &&
+      thisCollisionY < otherCollisionY + otherCollisionHeight &&
+      thisCollisionY + thisCollisionHeight > otherCollisionY
     );
   }
 

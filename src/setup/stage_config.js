@@ -7,8 +7,8 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
           "Kerby",
           imageList[0],
           10,
+          50,
           40,
-          32,
           0.4,
           0,
           50,
@@ -47,14 +47,16 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 0.3,
               spacing: 0,
             },
-          }
+          },
+          30,
+          40
         ),
         new UnitType(
           "WaddleDee",
           imageList[1],
           15,
+          50,
           40,
-          32,
           0.4,
           0,
           60,
@@ -92,14 +94,16 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               speed: 3,
               scale: 1.0,
             },
-          }
+          },
+          30,
+          40
         ),
         new UnitType(
           "Zelda",
           imageList[2],
           20,
+          50,
           40,
-          32,
           0.4,
           0,
           70,
@@ -135,14 +139,16 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               speed: 5,
               scale: 1.0,
             },
-          }
+          },
+          30,
+          40
         ),
         new UnitType(
           "Mario",
           imageList[3],
           30,
+          50,
           40,
-          32,
           0.4,
           0,
           80,
@@ -177,14 +183,16 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               speed: 5,
               scale: 1.0,
             },
-          }
+          },
+          30,
+          40
         ),
         new UnitType(
           "Boo",
           imageList[4],
           50,
+          50,
           40,
-          32,
           0.4,
           0,
           100,
@@ -221,7 +229,9 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 1.0,
 
             },
-          }
+          },
+          30,
+          40
         ),
       ];
 
