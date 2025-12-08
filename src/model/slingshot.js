@@ -203,7 +203,8 @@ class Slingshot {
     // fire()와 동일한 속도 계산
     const pullAngle = atan2(pullDy, pullDx);
     const fireAngle = pullAngle + PI;
-    const power = min(pullDistance / 2, 20);
+    // 더 빠르게 날아가도록 기존보다 2배 정도 속도 증가
+    const power = min(pullDistance, 40);
     let vx = cos(fireAngle) * power;
     let vy = sin(fireAngle) * power;
 
@@ -322,8 +323,9 @@ class Slingshot {
     const pullAngle = atan2(pullDy, pullDx);
     const fireAngle = pullAngle + PI; // 반대 방향
 
-    // 발사 속도 계산 (당긴 거리에 비례, 더 강하게)
-    const power = min(pullDistance / 2, 20); // 최대 속도 제한 증가
+    // 발사 속도 계산 (당긴 거리에 비례)
+    // 기존보다 2배 정도 빠르게 날아가도록 조정
+    const power = min(pullDistance, 40);
     const velocityX = cos(fireAngle) * power;
     const velocityY = sin(fireAngle) * power;
 
