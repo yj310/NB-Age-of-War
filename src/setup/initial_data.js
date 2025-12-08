@@ -14,7 +14,7 @@ function initialData() {
     /// 게임 화면 프레임 초기화
     mainFrame = new Frame(
         0, 0, // x, y
-        800, 600, // width, height
+        1100, 600, // width, height (양 진영 집 사이 거리를 더 넓히기 위해 가로 영역 확장)
         '#FFFFFF', '#000000' // color, strockColor
     );
 
@@ -25,11 +25,11 @@ function initialData() {
     // 이미지 로드
     backgroundImage = loadImage("assets/images/background.png");
     unit1SpriteImageList = [
-      loadImage("assets/unit/unit_1.png"),
-      loadImage("assets/unit/unit_2.png"),
-      loadImage("assets/unit/unit_3.png"),
-      loadImage("assets/unit/unit_4.png"),
-      loadImage("assets/unit/unit_5.png"),
+        loadImage("assets/unit/unit_1.png"),
+        loadImage("assets/unit/unit_2.png"),
+        loadImage("assets/unit/unit_3.png"),
+        loadImage("assets/unit/unit_4.png"),
+        loadImage("assets/unit/unit_5.png"),
     ];
     assetList = {
         "pause": loadImage('assets/images/pause.png'),
