@@ -221,9 +221,24 @@ class Slingshot {
     const releaseX = unit.dragOffsetX;
     const releaseY = unit.dragOffsetY;
 
-    // 당긴 방향 계산 (초기 위치에서 놓은 위치로)
-    const pullDx = releaseX - this.initialDragX;
-    const pullDy = releaseY - this.initialDragY;
+    // ------------------------------------------------------------------
+    // 당긴 방향 계산
+    // "새총 줄이 시작하는 위치 → 유닛을 걸고 당긴 위치" 벡터의
+    // **반대 방향**으로 날아가도록 계산한다.
+    //
+    // 줄 시작 위치는 렌더링에서 사용한 왼/오른쪽 밴드의 중간 지점으로 본다.
+    const leftBandX = -12;
+    const leftBandY = -28;
+    const rightBandX = 12;
+    const rightBandY = -28;
+
+    // 월드 좌표계에서의 줄 시작(중간) 위치
+    const bandStartX = this.x + (leftBandX + rightBandX) / 2;
+    const bandStartY = this.y + (leftBandY + rightBandY) / 2;
+
+    // 줄 시작점 → 유닛이 놓인 위치
+    const pullDx = releaseX - bandStartX;
+    const pullDy = releaseY - bandStartY;
     const pullDistance = sqrt(pullDx * pullDx + pullDy * pullDy);
 
     // 실제 새총처럼 당긴 방향의 반대 방향으로 발사
