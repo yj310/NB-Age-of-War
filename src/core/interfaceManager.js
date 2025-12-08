@@ -266,15 +266,9 @@ class InterfaceManager {
     fill('#333333');
     rect(endX - 60 - hpBarWidth, startY + 20, hpBarWidth, hpBarHeight, 5);
 
-    // HP Bar Fill
+    // HP Bar Fill (오른쪽에서 왼쪽으로 줄어듦)
     fill('#FF4444');
-    rect(endX - 60 - hpBarWidth + (hpBarWidth * (1 - hpRatio)), startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5); // Right aligned fill? No, usually left to right or right to left.
-    // Let's do standard left-to-right fill for simplicity, but positioned correctly.
-    // Actually, for enemy on right, right-to-left fill looks better or just standard.
-    // Let's stick to standard fill for now but positioned.
-    // Correcting fill logic:
-    fill('#FF4444');
-    rect(endX - 60 - hpBarWidth, startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5);
+    rect(endX - 60 - hpBarWidth + (hpBarWidth * (1 - hpRatio)), startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5);
 
     // HP Text
     fill('#FFFFFF');

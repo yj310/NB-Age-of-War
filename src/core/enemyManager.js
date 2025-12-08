@@ -35,7 +35,7 @@ class EnemyManager {
     this.trySpawnEnemiesFromQueue();
 
     // AI 자동 생성
-    this.autoSpawnEnemy();
+    // this.autoSpawnEnemy();
   }
 
   render() {
