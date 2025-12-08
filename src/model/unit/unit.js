@@ -309,7 +309,7 @@ class Unit {
         this.setAnimation("walk");
       } else {
         // 정지 상태면 idle 애니메이션
-        this.setAnimation('idle');
+        this.setAnimation("idle");
       }
 
       // 1. 이동 먼저 시도

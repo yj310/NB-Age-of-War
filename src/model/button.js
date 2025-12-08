@@ -54,7 +54,7 @@ class ImageButton extends Button {
 
 class UnitButton extends ImageButton {
     constructor(
-        x,y,
+        x, y,
         width,
         height,
         image,
@@ -81,7 +81,7 @@ class UnitButton extends ImageButton {
         // Unit Image
         if (this.image) {
             const imgSize = this.width - 20;
-            image(this.image, this.x + 20, this.y + 10, imgSize, imgSize, 0, 0, 100, 100);
+            image(this.image, this.x + 20, this.y + 10, imgSize, imgSize, 25, 0, 106, 106);
         }
 
         // Cost Area
