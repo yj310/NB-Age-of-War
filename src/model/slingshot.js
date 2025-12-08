@@ -144,6 +144,12 @@ class Slingshot {
 
       noTint();
       pop();
+
+      // --------------------------------------------------------------------
+      // 새총으로 발사될 유닛의 예상 궤적(점선) 표시
+      // 현재 당긴 상태에서, 실제 물리 업데이트 로직과 동일하게
+      // 중력을 적용한 포물선을 간단히 시뮬레이션하여 그린다.
+      this.renderTrajectoryPreview();
     } else if (this.isAiming) {
       // 조준 중일 때 고무줄 표시 (포켓만 마우스 위치로 이동)
       const pullX = cos(this.aimAngle) * this.aimPower;
@@ -168,6 +174,76 @@ class Slingshot {
     }
 
     pop();
+  }
+
+  // 현재 장전된 유닛이 있다면, 새총 발사 궤적을 점선으로 미리 그린다.
+  renderTrajectoryPreview() {
+    if (!this.loadedUnit) return;
+
+    const unit = this.loadedUnit;
+
+    // 월드 좌표에서의 현재 유닛(포켓) 위치
+    const releaseX = unit.dragOffsetX;
+    const releaseY = unit.dragOffsetY;
+
+    // 새총 줄 시작 위치 (렌더링과 동일한 기준)
+    const leftBandX = -12;
+    const leftBandY = -28;
+    const rightBandX = 12;
+    const rightBandY = -28;
+
+    const bandStartX = this.x + (leftBandX + rightBandX) / 2;
+    const bandStartY = this.y + (leftBandY + rightBandY) / 2;
+
+    // 줄 시작점 → 당긴 위치 벡터
+    const pullDx = releaseX - bandStartX;
+    const pullDy = releaseY - bandStartY;
+    const pullDistance = sqrt(pullDx * pullDx + pullDy * pullDy);
+
+    // fire()와 동일한 속도 계산
+    const pullAngle = atan2(pullDy, pullDx);
+    const fireAngle = pullAngle + PI;
+    const power = min(pullDistance / 2, 20);
+    let vx = cos(fireAngle) * power;
+    let vy = sin(fireAngle) * power;
+
+    // 시뮬레이션 시작 위치 (월드 좌표)
+    let simX = releaseX;
+    let simY = releaseY;
+
+    const gravity = unit.gravity || 0.3;
+    const steps = 80;      // 샘플 갯수 (더 길게)
+    const stepTime = 1;    // 프레임 단위
+
+    // 더 잘 보이도록 굵고 밝은 색의 점선으로 표시
+    stroke(0, 0, 0, 200);        // 어두운 테두리
+    strokeWeight(1);
+    fill(255, 255, 255, 230);      // 밝은 노란색 내부
+
+    for (let i = 0; i < steps; i++) {
+      // 중력 적용
+      vy += gravity * stepTime;
+      // 위치 업데이트
+      simX += vx * stepTime;
+      simY += vy * stepTime;
+
+      // 바닥에 닿으면 궤적 종료 (floorY는 전역으로 정의되어 있음)
+      if (typeof floorY !== "undefined" && simY + unit.height >= floorY) {
+        break;
+      }
+
+      // 현재 새총 기준 로컬 좌표로 변환 후 점 그리기
+      const localX = simX - this.x;
+      const localY = simY - this.y;
+
+      // 점선 느낌 + 가시성 향상을 위해 작은 원을 일정 간격마다 찍는다
+      if (i % 2 === 0) {
+        ellipse(localX, localY, 4, 4);
+      }
+    }
+
+    noStroke();
+    noFill();
   }
 
   // 유닛이 새총 범위 내에 있는지 확인
