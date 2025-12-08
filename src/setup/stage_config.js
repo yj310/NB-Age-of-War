@@ -167,7 +167,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 1.0,
             },
             walk: {
-              frameCount: 8,
+              frameCount: 11,
               frameWidth: 132,
               frameHeight: 106,
               startX: 0,
