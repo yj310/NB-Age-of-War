@@ -33,7 +33,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               frameHeight: 60,
               startX: 0,
               startY: 67,
-              speed: 5,
+              speed: 2,
               scale: 0.3,
               spacing: 0,
             },
@@ -48,7 +48,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               spacing: 0,
             },
           },
-          30,
+          40,
           40
         ),
         new UnitType(
@@ -81,7 +81,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               frameHeight: 106,
               startX: 0,
               startY: 111,
-              speed: 5,
+              speed: 2,
               scale: 1.0,
               spacing: 0,
             },
@@ -95,7 +95,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 1.0,
             },
           },
-          30,
+          40,
           40
         ),
         new UnitType(
@@ -127,7 +127,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               frameHeight: 106,
               startX: 0,
               startY: 107,
-              speed: 5,
+              speed: 2,
               scale: 0.3,
             },
             attack: {
@@ -140,7 +140,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 1.0,
             },
           },
-          30,
+          40,
           40
         ),
         new UnitType(
@@ -167,12 +167,12 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 1.0,
             },
             walk: {
-              frameCount: 7,
+              frameCount: 8,
               frameWidth: 132,
               frameHeight: 106,
               startX: 0,
               startY: 103,
-              speed: 5,
+              speed: 2,
             },
             attack: {
               frameCount: 4,
@@ -184,7 +184,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
               scale: 1.0,
             },
           },
-          30,
+          40,
           40
         ),
         new UnitType(
@@ -230,7 +230,7 @@ function createStageUnitConfig(stage, imageList = [], spriteSheetList = []) {
 
             },
           },
-          30,
+          40,
           40
         ),
       ];
