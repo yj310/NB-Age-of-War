@@ -1,3 +1,121 @@
+// ---------------------------------------------------------------------------
+// 새총 폭발 이펙트(시각 효과) 관리
+// ---------------------------------------------------------------------------
+const slingshotExplosions = [];
+
+function addSlingshotExplosion(x, y, radius) {
+  slingshotExplosions.push({
+    x,
+    y,
+    radius,
+    life: 25,
+    maxLife: 25,
+    initialized: false,
+    particles: [],
+  });
+
+  // 폭발 강도에 비례한 화면 흔들림
+  if (typeof screenShakePower !== "undefined") {
+    screenShakePower = max(screenShakePower, radius * 0.08);
+  }
+}
+
+function renderSlingshotExplosions() {
+  for (let i = slingshotExplosions.length - 1; i >= 0; i--) {
+    const e = slingshotExplosions[i];
+    e.life--;
+
+    if (e.life <= 0) {
+      slingshotExplosions.splice(i, 1);
+      continue;
+    }
+
+    const progress = 1 - e.life / e.maxLife; // 0 → 1
+    const currentRadius = e.radius * (0.5 + 0.8 * progress);
+    const alpha = 255 * (1 - progress);
+
+    // 처음 생성될 때 파편(스파크)들을 만들어 둔다.
+    if (!e.initialized) {
+      const particleCount = 22;
+      for (let p = 0; p < particleCount; p++) {
+        const angle = (TWO_PI / particleCount) * p + random(-0.2, 0.2);
+        const speed = random(e.radius * 0.08, e.radius * 0.18);
+        e.particles.push({
+          x: e.x,
+          y: e.y,
+          vx: cos(angle) * speed,
+          vy: sin(angle) * speed,
+          size: random(4, 7),
+        });
+      }
+      e.initialized = true;
+    }
+
+    push();
+
+    // 1) 중앙 섬광 (순간적으로 밝게 번쩍이는 효과)
+    const flashAlpha = alpha * (1.3 - progress);
+    noStroke();
+    fill(255, 255, 220, flashAlpha);
+    ellipse(e.x, e.y, currentRadius * 1.4, currentRadius * 1.4);
+
+    // 2) 바깥 밝은 고리 (충격파)
+    noFill();
+    stroke(255, 240, 160, alpha);
+    strokeWeight(5);
+    const shockRadius = currentRadius * (1.9 + 0.4 * sin(progress * PI));
+    ellipse(e.x, e.y, shockRadius * 2, shockRadius * 2);
+
+    // 3) 안쪽 주황/붉은 고리
+    stroke(255, 180, 80, alpha * 0.9);
+    strokeWeight(3);
+    ellipse(e.x, e.y, currentRadius * 1.6, currentRadius * 1.6);
+
+    // 3.5) 바깥 연기 아크
+    const smokeRadius = currentRadius * 2.6;
+    stroke(90, 90, 90, alpha * 0.7);
+    strokeWeight(4);
+    for (let s = 0; s < 3; s++) {
+      const start = random(TWO_PI);
+      const span = PI / 4;
+      arc(e.x, e.y, smokeRadius, smokeRadius, start, start + span);
+    }
+
+    // 3.8) 방사형 빛줄기
+    stroke(255, 255, 210, alpha * 0.7);
+    strokeWeight(2);
+    const rayCount = 8;
+    const rayLen = currentRadius * 1.8;
+    for (let r = 0; r < rayCount; r++) {
+      const a = (TWO_PI / rayCount) * r + progress * 0.6;
+      const x2 = e.x + cos(a) * rayLen;
+      const y2 = e.y + sin(a) * rayLen;
+      line(e.x, e.y, x2, y2);
+    }
+
+    // 4) 파편 스파크
+    for (const p of e.particles) {
+      // 간단한 감속
+      p.vx *= 0.92;
+      p.vy *= 0.92;
+      p.x += p.vx;
+      p.y += p.vy;
+
+      const sparkAlpha = alpha * 1.1;
+      noStroke();
+      // 바깥 테두리
+      fill(255, 220, 100, sparkAlpha);
+      ellipse(p.x, p.y, p.size, p.size);
+
+      // 안쪽 코어
+      fill(255, 255, 255, sparkAlpha);
+      ellipse(p.x, p.y, p.size * 0.5, p.size * 0.5);
+    }
+
+    pop();
+  }
+}
+
 class Unit {
   constructor(
     id,
@@ -524,8 +642,14 @@ class Unit {
   explode(others) {
     if (!this.slingshotDamage) return;
 
-    // 폭발 시각 효과 (선택적)
-    // 여기서는 데미지만 처리
+    // 폭발 중심 좌표 (현재 유닛의 중앙)
+    const explosionX = this.x + this.width / 2;
+    const explosionY = this.y + this.height / 2;
+
+    // 폭발 시각 효과 추가
+    if (typeof addSlingshotExplosion === "function") {
+      addSlingshotExplosion(explosionX, explosionY, this.explosionRadius);
+    }
 
     for (const other of others) {
       if (other === this) continue;
@@ -534,8 +658,6 @@ class Unit {
       if (other.type !== EntityType.ENEMY) continue;
 
       // 거리 계산 (폭발 중심은 현재 유닛 위치)
-      const explosionX = this.x + this.width / 2;
-      const explosionY = this.y + this.height / 2;
       const otherCenterX = other.x + other.width / 2;
       const otherCenterY = other.y + other.height / 2;
       const dx = otherCenterX - explosionX;
@@ -573,8 +695,6 @@ class Unit {
       if (other === this) continue;
 
       if (other.constructor && other.constructor.name === 'EnemyHome') {
-        const explosionX = this.x + this.width / 2;
-        const explosionY = this.y + this.height / 2;
         const homeCenterX = other.x + other.width / 2;
         const homeCenterY = other.y + other.height / 2;
         const dx = homeCenterX - explosionX;

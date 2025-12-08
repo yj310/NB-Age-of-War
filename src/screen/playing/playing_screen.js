@@ -134,11 +134,31 @@ class PlayingScreen extends GameScreen {
 
   /// 게임 필드 그리기
   drawGameField() {
+    push();
+
+    // 폭발 시 화면 흔들림 (shake)
+    if (typeof screenShakePower !== "undefined" && screenShakePower > 0) {
+      const shakeX = random(-screenShakePower, screenShakePower);
+      const shakeY = random(-screenShakePower, screenShakePower);
+      translate(shakeX, shakeY);
+
+      screenShakePower *= 0.88;
+      if (screenShakePower < 0.4) {
+        screenShakePower = 0;
+      }
+    }
+
     if (backgroundImage) {
       image(backgroundImage, 0, 0, mainFrame.width, mainFrame.height);
     }
     this.playerManager.render();
     this.enemyManager.render();
+
+    // 새총 폭발 이펙트 렌더링
+    if (typeof renderSlingshotExplosions === "function") {
+      renderSlingshotExplosions();
+    }
+
+    pop();
   }
 }
- 

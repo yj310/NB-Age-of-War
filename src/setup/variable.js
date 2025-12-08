@@ -64,3 +64,6 @@ const EntityType = Object.freeze({
   ENEMY: "enemy",
   ATTACK: "attack",
 });
+
+// 새총 폭발 시 화면 흔들림 효과 세기
+let screenShakePower = 0;
