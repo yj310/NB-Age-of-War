@@ -2,10 +2,12 @@ class GameClearScreen extends GameScreen {
     constructor() {
         super();
         this.showCredits = false;
+        this.enterTick = 0;
     }
 
     onEnter() {
         this.showCredits = false;
+        this.enterTick = tick;
     }
 
     render(screen) {
@@ -13,6 +15,11 @@ class GameClearScreen extends GameScreen {
 
         translate(mainFrame.x, mainFrame.y);
         textAlign(CENTER, CENTER);
+
+        // 3초(약 30틱, 1틱 = 0.1초) 후 자동으로 크레딧 표시
+        if (!this.showCredits && tick - this.enterTick >= 30) {
+            this.showCredits = true;
+        }
 
         if (!this.showCredits) {
             this.drawGameClearText();
@@ -71,7 +78,7 @@ class GameClearScreen extends GameScreen {
         }
 
         fill(`  #999999${transparency.toString(16)}`);
-        text("클릭하거나 키를 눌러 메인 메뉴로", mainFrame.width / 2, 500);
+        text("클릭하거나 키를 눌러 크레딧 보기", mainFrame.width / 2, 500);
     }
 
     drawGameClearText() {
