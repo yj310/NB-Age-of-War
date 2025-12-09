@@ -34,6 +34,9 @@ class PlayingScreen extends GameScreen {
   }
 
   update(screen) {
+    // 인터페이스 매니저 업데이트 (음소거 버튼 아이콘 갱신 등을 위해)
+    this.interfaceManager.update();
+
     // 새총 발사된 유닛이 상대편 집과 충돌하는지 체크하기 위해 enemyHome 추가
     const allEntities = [
       ...this.enemyManager.enemies,
@@ -85,11 +88,10 @@ class PlayingScreen extends GameScreen {
     this.playerManager.render();
     this.enemyManager.render();
 
-     for (const ultimate of this.ultimates) {
-       ultimate.render();
-     }
+    for (const ultimate of this.ultimates) {
+      ultimate.render();
+    }
    
-
     resetMatrix();
   }
 

@@ -35,6 +35,8 @@ function initialData() {
         "pause": loadImage('assets/images/pause.png'),
         "play": loadImage('assets/images/play.png'),
         "fast_forward": loadImage('assets/images/fast_forward.png'),
+        "mute": loadImage('assets/images/mute.png'),
+        "volume": loadImage('assets/images/volume.png'),
     };
     homeImage = loadImage('assets/images/home.png');
     enemyHomeImage = loadImage("assets/images/home.png");

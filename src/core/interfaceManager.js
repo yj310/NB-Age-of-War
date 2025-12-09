@@ -43,7 +43,19 @@ class InterfaceManager {
           }
         }
       ),
+      new ImageButton(
+        mainFrame.width / 2 + 150,
+        15,
+        20,
+        20,
+        null,
+        () => toggleMute()
+      ),
     ];
+    // 음소거 버튼 참조 저장 (이미지 업데이트용)
+    this.muteButton = this.buttons[3];
+    this.muteButton.image = isMuted ? assetList["mute"] : assetList["volume"];
+
     this.playerManager = null;
     this.enemyManager = null;
     this.topInterfaceFrame = new Frame(
@@ -72,7 +84,12 @@ class InterfaceManager {
     );
   }
 
-  update() { }
+  update() {
+    // 음소거 상태에 따라 아이콘 업데이트
+    if (this.muteButton) {
+      this.muteButton.image = isMuted ? assetList["mute"] : assetList["volume"];
+    }
+  }
 
   render() {
     this.drawTopInterface();

@@ -5,6 +5,7 @@ function preload() {
 
 function setup() {
     initialData();
+    userStartAudio(); // 오디오 컨텍스트 시작 시도
 }
 
 function draw() {

@@ -80,3 +80,6 @@ const EntityType = Object.freeze({
 
 // 새총 폭발 시 화면 흔들림 효과 세기
 let screenShakePower = 0;
+
+/// 음소거 상태
+let isMuted = false;

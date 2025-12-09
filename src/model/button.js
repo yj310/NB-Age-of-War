@@ -64,6 +64,41 @@ class ImageButton extends Button {
     }
 }
 
+class EmojiButton extends Button {
+    constructor(
+        x, y,
+        width, height,
+        emojiGetter, // function returning string (e.g. () => isMuted ? "🔇" : "🔊")
+        onPressed,
+        color,
+        strockColor
+    ) {
+        super(x, y, width, height, onPressed, color, strockColor);
+        this.emojiGetter = emojiGetter;
+    }
+
+    render() {
+        // Button Background
+        if (this.color) {
+            fill(this.color);
+        } else {
+            noFill();
+        }
+        if (this.strockColor) {
+            stroke(this.strockColor);
+        } else {
+            noStroke();
+        }
+        // rect(this.x, this.y, this.width, this.height); // Optional background
+
+        // Emoji Text
+        fill(0);
+        textSize(this.width * 0.8); // Adjust size relative to button width
+        textAlign(CENTER, CENTER);
+        text(this.emojiGetter(), this.x + this.width / 2, this.y + this.height / 2);
+    }
+}
+
 class UnitButton extends ImageButton {
     constructor(
         x, y,
