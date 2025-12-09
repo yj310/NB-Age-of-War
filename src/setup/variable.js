@@ -23,6 +23,10 @@ let mainFrame = null;
 /// type: Image
 let backgroundImage = null;
 
+/// 타이틀 배경 이미지
+/// type: Image
+let titleBackgroundImage = null;
+
 /// 게임 상태
 /// type: GameState
 let gameState = GameState.mainMenu;

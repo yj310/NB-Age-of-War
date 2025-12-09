@@ -12,6 +12,13 @@ class MainMenuScreen extends GameScreen {
         drawMainFrame();
 
         translate(mainFrame.x, mainFrame.y);
+
+        if (titleBackgroundImage) {
+            image(titleBackgroundImage, 0, 0, mainFrame.width, mainFrame.height);
+        }
+
+        drawMuteButton();
+
         textAlign(CENTER, CENTER);
 
 
@@ -26,6 +33,11 @@ class MainMenuScreen extends GameScreen {
     }
 
     mousePressed(mouseX, mouseY) {
+        // 브라우저 정책상 첫 인터랙션에서 오디오 컨텍스트가 켜지므로,
+        // 첫 클릭 시 바로 게임이 시작되지 않고 오디오가 켜지도록 처리
+        if (getAudioContext().state !== 'running') {
+            return;
+        }
         setGameState(GameState.playing);
     }
 
