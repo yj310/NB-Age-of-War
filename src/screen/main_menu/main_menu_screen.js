@@ -42,7 +42,7 @@ class MainMenuScreen extends GameScreen {
     }
 
     drawPressAnyKey() {
-        textSize(18);
+        textSize(24);
 
         /// 텍스트 투명도 계산
         const maxTransparency = 255;
@@ -56,14 +56,21 @@ class MainMenuScreen extends GameScreen {
             transparency = minTransparency + (maxTransparency - minTransparency) - value;
         }
 
-        fill(`  #999999${transparency.toString(16)}`);
-        text("press any key to start", mainFrame.width / 2, 500);
+        // 텍스트 가독성을 위해 외곽선 추가
+        stroke(0);
+        strokeWeight(4);
+        fill(255, 255, 255, transparency);
+        text("화면을 클릭하여 시작하세요", mainFrame.width / 2, 500);
+        noStroke();
     }
 
     drawTitleText() {
+        // 제목 가독성을 위해 외곽선 추가
+        stroke(255);
+        strokeWeight(6);
         fill("#000000");
-        textSize(48);
+        textSize(60);
         text("인형 왕국 대작전!", mainFrame.width / 2, 150);
-
+        noStroke();
     }
 }
