@@ -27,6 +27,14 @@ let backgroundImage = null;
 /// type: Image
 let titleBackgroundImage = null;
 
+/// 로고 이미지
+/// type: Image
+let logoImage = null;
+
+/// 정보 아이콘 이미지
+/// type: Image
+let infoImage = null;
+
 /// 게임 상태
 /// type: GameState
 let gameState = GameState.mainMenu;

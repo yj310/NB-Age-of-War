@@ -25,6 +25,7 @@ function initialData() {
     // 이미지 로드
     backgroundImage = loadImage("assets/images/background.png");
     titleBackgroundImage = loadImage("assets/images/title_background.png");
+    logoImage = loadImage("assets/images/logo.png");
     unit1SpriteImageList = [
         loadImage("assets/unit/unit_1.png"),
         loadImage("assets/unit/unit_2.png"),
@@ -39,6 +40,7 @@ function initialData() {
         "mute": loadImage('assets/images/mute.png'),
         "volume": loadImage('assets/images/volume.png'),
     };
+    infoImage = loadImage('assets/images/info.png');
     homeImage = loadImage('assets/images/home.png');
     enemyHomeImage = loadImage("assets/images/home.png");
     ultimateImage = loadImage('assets/ultimate/question_box.png');
