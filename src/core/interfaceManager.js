@@ -141,19 +141,13 @@ class InterfaceManager {
     const startX = this.topInterfaceFrame.x + 10;
     const startY = this.topInterfaceFrame.y + 10;
 
-    // 아바타 (Placeholder)
-    fill('#AAAAAA');
-    stroke('#000000');
-    strokeWeight(2);
-    rect(startX, startY, 50, 50, 10); // Rounded rect
-
     // 텍스트: 우리 기지
     noStroke();
     fill('#000000');
     textAlign(LEFT, TOP);
     textSize(14);
     textStyle(BOLD);
-    text("우리 기지", startX + 60, startY);
+    text("우리 기지", startX, startY);
 
     // HP Bar
     const hpBarWidth = 150;
@@ -162,23 +156,23 @@ class InterfaceManager {
 
     // HP Bar Background
     fill('#333333');
-    rect(startX + 60, startY + 20, hpBarWidth, hpBarHeight, 5);
+    rect(startX, startY + 20, hpBarWidth, hpBarHeight, 5);
 
     // HP Bar Fill
     fill('#44FF44');
-    rect(startX + 60, startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5);
+    rect(startX, startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5);
 
     // HP Text
     fill('#FFFFFF');
     textSize(10);
     textAlign(CENTER, CENTER);
-    text("HP", startX + 60 + 15, startY + 20 + hpBarHeight / 2);
+    text("HP", startX + 15, startY + 20 + hpBarHeight / 2);
 
     // Level & XP
     fill('#000000');
     textSize(14);
     textAlign(LEFT, TOP);
-    text(`LV.${this.playerManager.Level}`, startX + 60, startY + 40);
+    text(`LV.${this.playerManager.Level}`, startX, startY + 40);
 
     // XP Bar
     const xpBarWidth = 100;
@@ -187,17 +181,17 @@ class InterfaceManager {
 
     // XP Bar Background
     fill('#333333');
-    rect(startX + 100, startY + 42, xpBarWidth, xpBarHeight, 5);
+    rect(startX + 40, startY + 42, xpBarWidth, xpBarHeight, 5);
 
     // XP Bar Fill
     fill('#4488FF');
-    rect(startX + 100, startY + 42, xpBarWidth * xpRatio, xpBarHeight, 5);
+    rect(startX + 40, startY + 42, xpBarWidth * xpRatio, xpBarHeight, 5);
 
     // XP Text
     fill('#FFFFFF');
     textSize(8);
     textAlign(CENTER, CENTER);
-    text(`(XP ${Math.floor(xpRatio * 100)}%)`, startX + 100 + xpBarWidth / 2, startY + 42 + xpBarHeight / 2);
+    text(`(XP ${Math.floor(xpRatio * 100)}%)`, startX + 40 + xpBarWidth / 2, startY + 42 + xpBarHeight / 2);
   }
 
   drawCenterInfo() {
@@ -251,19 +245,13 @@ class InterfaceManager {
     const endX = this.topInterfaceFrame.x + this.topInterfaceFrame.width - 10;
     const startY = this.topInterfaceFrame.y + 10;
 
-    // Avatar (Placeholder)
-    fill('#AAAAAA');
-    stroke('#000000');
-    strokeWeight(2);
-    rect(endX - 50, startY, 50, 50, 10);
-
     // 텍스트: 적 기지
     noStroke();
     fill('#000000');
     textAlign(RIGHT, TOP);
     textSize(14);
     textStyle(BOLD);
-    text("적 기지", endX - 60, startY);
+    text("적 기지", endX, startY);
 
     // HP Bar
     const hpBarWidth = 150;
@@ -272,17 +260,17 @@ class InterfaceManager {
 
     // HP Bar Background
     fill('#333333');
-    rect(endX - 60 - hpBarWidth, startY + 20, hpBarWidth, hpBarHeight, 5);
+    rect(endX - hpBarWidth, startY + 20, hpBarWidth, hpBarHeight, 5);
 
     // HP Bar Fill (오른쪽에서 왼쪽으로 줄어듦)
     fill('#FF4444');
-    rect(endX - 60 - hpBarWidth + (hpBarWidth * (1 - hpRatio)), startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5);
+    rect(endX - hpBarWidth + (hpBarWidth * (1 - hpRatio)), startY + 20, hpBarWidth * hpRatio, hpBarHeight, 5);
 
     // HP Text
     fill('#FFFFFF');
     textSize(10);
     textAlign(CENTER, CENTER);
-    text("HP", endX - 60 - 15, startY + 20 + hpBarHeight / 2);
+    text("HP", endX - 15, startY + 20 + hpBarHeight / 2);
 
     // Level
     fill('#000000');
@@ -291,7 +279,7 @@ class InterfaceManager {
     // Enemy level is not directly available in EnemyManager usually, but let's assume 1 or add it.
     // Checking EnemyManager... it doesn't have level property shown in previous view_file.
     // I'll use a placeholder or check if I can access it.
-    text("적 LV.5", endX - 60, startY + 40);
+    text("적 LV.5", endX, startY + 40);
   }
 
   /// 하단 인터페이스 프레임
