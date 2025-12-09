@@ -290,7 +290,7 @@ class Enemy {
         const distanceToHome = homeRightEdge - this.x;
 
         // 집 앞 공격 범위 내에 있으면 멈추고 공격
-        if (distanceToHome <= other.attackRange && distanceToHome >= -this.width) {
+        if (distanceToHome <= other.attackRange && distanceToHome >= -this.attackRange) {
           this.x = prevX;
           this.y = prevY;
 
