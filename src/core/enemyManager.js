@@ -17,6 +17,8 @@ class EnemyManager {
 
     this.level = 1;
     this.maxLevel = 3;
+
+    this.playerManager = null; // 플레이어 매니저 참조
   }
 
   update(others = []) {
@@ -27,6 +29,16 @@ class EnemyManager {
 
     // 적 유닛 이동/공격 업데이트
     this.enemies.forEach((enemy) => enemy.update(others));
+
+    // 죽은 적 처리 및 MP 보상 지급
+    const deadEnemies = this.enemies.filter((enemy) => !enemy.isAlive());
+    deadEnemies.forEach((enemy) => {
+      if (enemy.mpCost && this.playerManager) {
+        // 적 유닛의 MP 코스트의 2/3을 플레이어에게 지급
+        const reward = Math.floor(enemy.mpCost * 2 / 3);
+        this.playerManager.addMp(reward);
+      }
+    });
 
     // 죽은 적 제거
     this.enemies = this.enemies.filter((enemy) => enemy.isAlive());
@@ -119,8 +131,15 @@ class EnemyManager {
         break;
     }
 
+    // 적 유닛에 MP 코스트 저장 (처치 시 보상 지급용)
+    enemy.mpCost = enemyType.mpCost;
+
     // 바로 스폰하지 말고 대기열에 넣음
     this.spawnQueue.push(enemy);
+  }
+
+  setPlayerManager(playerManager) {
+    this.playerManager = playerManager;
   }
 
   // 스폰 위치가 비었는지 체크

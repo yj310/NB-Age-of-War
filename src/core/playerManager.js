@@ -135,4 +135,9 @@ class PlayerManager {
       return unit.x < spawnX + unit.width && unit.x + unit.width > spawnX;
     });
   }
+
+  // MP 추가 (적 처치 보상용)
+  addMp(amount) {
+    this.mp = Math.min(this.mp + amount, this.maxMp);
+  }
 }

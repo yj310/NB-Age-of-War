@@ -91,7 +91,7 @@ class PlayingScreen extends GameScreen {
     for (const ultimate of this.ultimates) {
       ultimate.render();
     }
-   
+
     resetMatrix();
   }
 
@@ -151,6 +151,7 @@ class PlayingScreen extends GameScreen {
     this.playerManager.setUnitTypes(this.unitTypes);
     this.interfaceManager.setUnitTypes(this.unitTypes);
     this.enemyManager.setEnemyTypes(this.unitTypes);
+    this.enemyManager.setPlayerManager(this.playerManager);
     this.interfaceManager.setPlayerManager(this.playerManager);
     this.interfaceManager.setEnemyManager(this.enemyManager);
 
