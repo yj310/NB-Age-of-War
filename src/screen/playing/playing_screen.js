@@ -24,6 +24,13 @@ class PlayingScreen extends GameScreen {
 
   onEnter() {
     this.setFirstStage();
+
+    if (homeMusic && homeMusic.isPlaying()) {
+      homeMusic.stop();
+    }
+    if (gameMusic && !gameMusic.isPlaying()) {
+      gameMusic.loop();
+    }
   }
 
   update(screen) {

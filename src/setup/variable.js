@@ -56,6 +56,11 @@ let ultimateImage = null;
 /// type: Image
 let ultimateSpriteSheet = null;
 
+/// 배경 음악
+/// type: p5.SoundFile
+let homeMusic = null;
+let gameMusic = null;
+
 
 /// 이전 마우스 위치
 /// type: int

@@ -1,5 +1,12 @@
 class MainMenuScreen extends GameScreen {
-    onEnter() { }
+    onEnter() {
+        if (gameMusic && gameMusic.isPlaying()) {
+            gameMusic.stop();
+        }
+        if (homeMusic && !homeMusic.isPlaying()) {
+            homeMusic.loop();
+        }
+    }
 
     render(screen) {
         drawMainFrame();
