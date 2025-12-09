@@ -52,7 +52,7 @@ class EnemyManager {
     if (!this.enemyTypes || this.enemyTypes.length === 0) return;
 
     // 30틱마다 한번만 스폰 시도 (빈도 감소)
-    if (tick % 40 === 0) {
+    if (tick % 30 === 0) {
       if (random() < 0.15) {
         // 15% 확률 (기존 30%에서 감소)
         const affordable = this.enemyTypes.filter((t) => this.mp >= t.mpCost);
