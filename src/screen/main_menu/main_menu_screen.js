@@ -182,39 +182,31 @@ class MainMenuScreen extends GameScreen {
         // 사용한 P5.js 주요 기능들
         textSize(18);
         fill(50, 100, 200);
-        text("🎨 사용한 P5.js 주요 기능들", mainFrame.width / 2, boxY + 210);
+        text("🎨 사용한 P5.js 주요 기능들", mainFrame.width / 2, boxY + 220);
         fill(0);
         textSize(14);
-        text("render(), update(), loadSound()", mainFrame.width / 2, boxY + 235);
-        text("이미지 렌더링, 사운드 재생, 마우스/키보드 인터랙션", mainFrame.width / 2, boxY + 255);
+        text("render(), update(), loadSound()", mainFrame.width / 2, boxY + 245);
+        text("이미지 렌더링, 사운드 재생, 마우스/키보드 인터랙션", mainFrame.width / 2, boxY + 265);
 
         // AI 사용 비율
         textSize(18);
         fill(50, 100, 200);
-        text("🤖 AI 사용 비율", mainFrame.width / 2, boxY + 290);
+        text("🤖 AI 사용 비율", mainFrame.width / 2, boxY + 310);
         fill(0);
         textSize(14);
-        text("코드: 40%, AI: 60%", mainFrame.width / 2, boxY + 315);
+        text("코드: 40%, AI: 60%", mainFrame.width / 2, boxY + 335);
 
         // AI를 활용한 콘텐츠 - 이미지
         textSize(18);
         fill(50, 100, 200);
-        text("🖼️ AI 활용 콘텐츠 - 이미지", mainFrame.width / 2, boxY + 350);
+        text("🖼️ AI 활용 콘텐츠 - 이미지", mainFrame.width / 2, boxY + 380);
         fill(0);
         textSize(14);
         text(
-          "unit_1_1.png, unit_1_2.png, unit_1_3.png, unit_1_4.png, unit_1_5.png ",
-          mainFrame.width / 2,
-          boxY + 375
+            "unit_1_1.png, unit_1_2.png, unit_1_3.png, unit_1_4.png, unit_1_5.png ",
+            mainFrame.width / 2,
+            boxY + 405
         );
-
-        // AI를 활용한 콘텐츠 - 음성
-        textSize(18);
-        fill(50, 100, 200);
-        text("🔊 AI 활용 콘텐츠 - 음성", mainFrame.width / 2, boxY + 410);
-        fill(0);
-        textSize(14);
-        text("game.ogg, home.ogg", mainFrame.width / 2, boxY + 435);
 
         // 닫기 버튼
         const closeX = mainFrame.width / 2 - 50;

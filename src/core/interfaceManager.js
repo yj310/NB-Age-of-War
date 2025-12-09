@@ -320,16 +320,6 @@ class InterfaceManager {
     noStroke();
     text("유닛 생산", this.bottomInterfaceFrame.x + 20 + tabWidth / 2, this.bottomInterfaceFrame.y - tabHeight / 2);
 
-    // Tab 2: Tower/Weapon (Inactive)
-    fill('#A0A0A0'); // Darker for inactive
-    stroke('#000000');
-    strokeWeight(2);
-    rect(this.bottomInterfaceFrame.x + 20 + tabWidth + 5, this.bottomInterfaceFrame.y - tabHeight + 5, tabWidth, tabHeight, 10, 10, 0, 0);
-
-    fill('#505050');
-    noStroke();
-    text("타워/무기", this.bottomInterfaceFrame.x + 20 + tabWidth + 5 + tabWidth / 2, this.bottomInterfaceFrame.y - tabHeight + 5 + tabHeight / 2);
-
     // Main Panel
     fill('#F5F5DC'); // Beige/Cream background
     stroke('#000000');
